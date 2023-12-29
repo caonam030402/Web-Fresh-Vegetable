@@ -6,6 +6,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        contact_background: "url('./src/assets/images/im_bg_contact.png')"
+      }),
       colors: {
         primary: '#008641',
         greenDark: '#003f1f',

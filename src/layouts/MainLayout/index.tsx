@@ -1,4 +1,5 @@
 import React from 'react'
+import AppFooter from 'src/components/AppFooter'
 import AppHeader from 'src/components/AppHeader'
 
 interface Props {
@@ -10,6 +11,7 @@ export default function MainLayout({ children }: Props) {
     <div>
       <AppHeader />
       {children}
+      <AppFooter />
     </div>
   )
 }
