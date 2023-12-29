@@ -5,7 +5,7 @@ import { FaFacebook, FaShare } from 'react-icons/fa'
 export default function AppFooter() {
   return (
     <div className='bg-white py-16'>
-      <div className='container grid grid-cols-4 gap-10'>
+      <div className='container grid md:grid-cols-4 gap-10 col-span-2'>
         <div className='col-span-1 text-sm text-primary'>
           <Link to=''>
             <img src={pathImage.logo} alt='' />
@@ -73,7 +73,7 @@ export default function AppFooter() {
                     <FaFacebook /> <span>Follow Page</span>
                   </div>
                 </Link>
-                <Link to='' className='p-2 bg-white flex'>
+                <Link to='' className='p-2 bg-white xl:flex hidden'>
                   <div className='flex items-center gap-2'>
                     <FaShare /> <span>Share</span>
                   </div>
