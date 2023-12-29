@@ -9,6 +9,7 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
+
   resolve: {
     alias: {
       src: path.resolve(__dirname, './src')
