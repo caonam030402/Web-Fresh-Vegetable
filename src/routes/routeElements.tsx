@@ -1,14 +1,19 @@
 import React from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import MainLayout from 'src/layouts/MainLayout'
 import Home from 'src/pages/Home/Home'
 
 export default function routeElements() {
-  const routes = useRoutes([
+  const routeElements = useRoutes([
     {
       index: true,
       path: '',
-      element: <Home />
+      element: (
+        <MainLayout>
+          <Home />
+        </MainLayout>
+      )
     }
   ])
-  return routes
+  return routeElements
 }

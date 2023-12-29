@@ -7,8 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primaryColor: '#ee4d2d',
-        secondaryYellow: '#24a998'
+        primary: '#008641',
+        greenDark: '#003f1f',
+        secondary: '#f5821f'
       },
       animation: {
         slideDown: 'slideDown 0.35s ease-out'
@@ -37,7 +38,6 @@ module.exports = {
         }
       })
     }),
-    require('@tailwindcss/line-clamp'),
-    require('tailwind-scrollbar')({ nocompatible: true })
+    require('@tailwindcss/line-clamp')
   ]
 }
