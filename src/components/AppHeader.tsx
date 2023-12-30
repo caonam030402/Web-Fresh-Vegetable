@@ -8,7 +8,7 @@ import { HiMenu } from 'react-icons/hi'
 export default function AppHeader() {
   const listMenu = ['SẢN PHẨM', 'COMBO', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
   return (
-    <div className='bg-white'>
+    <div className='bg-white sticky top-0 shadow-sm z-10'>
       <div className='bg-primary text-white text-xs py-2'>
         <div className='container flex items-center justify-center md:justify-between'>
           <div>Free ship cho đơn hàng từ 350k. Giao hàng siêu tốc trong 2h.</div>
