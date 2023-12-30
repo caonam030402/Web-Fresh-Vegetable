@@ -2,6 +2,7 @@ import { ImageSlide } from 'src/assets/images/slide'
 import SlideHome from './components/SlideHome'
 import { SwiperSlide } from 'swiper/react'
 import Featured from './components/Featured'
+import LatestNews from './components/LatestNews'
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       />
       <div className='container'>
         <Featured />
+        <LatestNews />
       </div>
     </div>
   )
