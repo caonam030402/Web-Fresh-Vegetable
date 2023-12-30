@@ -1,6 +1,7 @@
 import { ImageSlide } from 'src/assets/images/slide'
 import SlideHome from './components/SlideHome'
 import { SwiperSlide } from 'swiper/react'
+import Featured from './components/Featured'
 
 export default function Home() {
   return (
@@ -18,6 +19,9 @@ export default function Home() {
           </SwiperSlide>
         ))}
       />
+      <div className='container'>
+        <Featured />
+      </div>
     </div>
   )
 }
