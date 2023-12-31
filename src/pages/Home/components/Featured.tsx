@@ -3,6 +3,7 @@ import { TfiHeadphoneAlt } from 'react-icons/tfi'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { LiaShoppingBagSolid } from 'react-icons/lia'
 import { BsBox } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 
 const listData = [
   {
@@ -29,9 +30,13 @@ const listData = [
 
 export default function Featured() {
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 p-8 shadow-sm spacerSection'>
+    <div className='grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 spacerSection'>
       {listData.map((item, index) => (
-        <div key={index} className='flex items-center'>
+        <Link
+          to=''
+          key={index}
+          className='flex items-center p-4 rounded-xl bg-white shadow-sm focus:border-primary hover:shadow-md hover:border-primary border-2 transition-all duration-300'
+        >
           <div className='cursor-pointer hover:bg-primary text-greenDark hover:text-white hover:scale-105 duration-200 transition-all w-14 h-14 flex items-center justify-center rounded-full bg-primary bg-opacity-30'>
             {item.icon}
           </div>
@@ -39,7 +44,7 @@ export default function Featured() {
             <p className='text-base font-semibold'>{item.title}</p>
             <p className='text-sm text-neutral-400'>{item.description}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   )
