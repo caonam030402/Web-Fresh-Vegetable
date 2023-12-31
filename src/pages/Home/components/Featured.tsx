@@ -30,7 +30,7 @@ const listData = [
 
 export default function Featured() {
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 spacerSection'>
+    <div className='grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 my-20'>
       {listData.map((item, index) => (
         <Link
           to=''

@@ -1,15 +1,16 @@
 import { ImageSlide } from 'src/assets/images/slide'
-import SlideHome from './components/SlideHome'
 import { SwiperSlide } from 'swiper/react'
 import Featured from './components/Featured'
 import LatestNews from './components/LatestNews'
 import WhyChooseUs from './components/WhyChooseUs'
 import Category from './components/Category'
+import Testimonial from './components/Testimonial'
+import AppSlide from 'src/components/AppSlide'
 
 export default function Home() {
   return (
     <div className=''>
-      <SlideHome
+      <AppSlide
         autoplay={true}
         pagination={true}
         slidesPerGroup={1}
@@ -23,10 +24,11 @@ export default function Home() {
         ))}
       />
       <div className='container'>
-        <Featured />
         <Category />
         <WhyChooseUs />
+        <Featured />
         <LatestNews />
+        <Testimonial />
       </div>
     </div>
   )

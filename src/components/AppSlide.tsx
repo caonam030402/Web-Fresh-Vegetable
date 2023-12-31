@@ -20,10 +20,11 @@ interface Props {
   hiddenBtn?: boolean
 }
 
-export default function SlideHome({
+export default function AppSlide({
   colorBtn = '#003f1f',
   classNameSwiper,
   slidesPerGroup,
+
   listItem,
   buttonStylePrev = 'rounded-full flex item-center justify-center hover:bg-primary bg-white bg-opacity-60 transition-all duration-400 w-12 h-12 translate-x-[-100%] group-hover:translate-x-[10px]',
   buttonStyleNext = 'rounded-full flex item-center justify-center hover:bg-primary bg-white bg-opacity-60 transition-all duration-400 w-12 h-12 translate-x-[100%] group-hover:translate-x-[-10px]',

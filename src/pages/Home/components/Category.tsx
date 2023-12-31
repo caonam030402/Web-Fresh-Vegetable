@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
-import SlideHome from './SlideHome'
 import { SwiperSlide } from 'swiper/react'
-import { IoArrowForward } from 'react-icons/io5'
 import AppTitleSection from 'src/components/AppTitleSection'
+import AppSlide from 'src/components/AppSlide'
 
 const listCategory = [
   {
@@ -32,7 +31,7 @@ export default function Category() {
   return (
     <div>
       <AppTitleSection title='Danh mục sản phẩm' viewAll={true}></AppTitleSection>
-      <SlideHome
+      <AppSlide
         autoplay={true}
         pagination={true}
         slidesPerGroup={1}
