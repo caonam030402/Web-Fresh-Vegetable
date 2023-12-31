@@ -49,14 +49,14 @@ export default function Testimonial() {
         classNameSwiper='z-0 w-full'
         listItem={listDataTestimonial.map((item, index) => (
           <SwiperSlide
-            className='p-6 bg-white rounded-md shadow-sm hover:bg-primary hover:bg-opacity-10 border border-white hover:border-primary ease-in-out duration-300 cursor-pointer'
+            className='p-6 md:text-left text-center bg-white rounded-md shadow-sm hover:bg-primary hover:bg-opacity-10 border border-white hover:border-primary ease-in-out duration-300 cursor-pointer'
             key={index}
           >
             <RiDoubleQuotesR className='text-primary' size={35} />
             <div className='mt-3 text-sm text-neutral-600'>{item?.quote}</div>
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center mt-3 gap-2'>
-                <div className='w-12 h-12 rounded-full overflow-hidden'>
+            <div className='flex flex-col items-center justify-between md:flex-row'>
+              <div className='flex flex-col items-center mt-3 gap-2 md:flex-row'>
+                <div className='w-12 h-12 rounded-full overflow-hidden flex-shrink-0'>
                   <img className='w-full h-full object-cover' src={item?.image} alt='' />
                 </div>
                 <div>

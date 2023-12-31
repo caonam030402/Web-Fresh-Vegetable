@@ -29,7 +29,7 @@ const listCategory = [
 
 export default function Category() {
   return (
-    <div>
+    <div className='spacerSection'>
       <AppTitleSection title='Danh mục sản phẩm' viewAll={true}></AppTitleSection>
       <AppSlide
         autoplay={true}

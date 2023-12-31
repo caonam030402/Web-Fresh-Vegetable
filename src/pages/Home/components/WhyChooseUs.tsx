@@ -4,8 +4,8 @@ import { pathImage } from 'src/configs/path.image'
 
 export default function WhyChooseUs() {
   return (
-    <div className='flex gap-10 spacerSection'>
-      <div className='w-[50%] flex gap-5 items-center group'>
+    <div className='flex gap-10 spacerSection flex-wrap'>
+      <div className='w-full md:w-[50%] flex gap-5 items-center group'>
         <div className='w-[40%] hover:h-96 h-80 hover:w-[60%] relative rounded-lg ease-in-out duration-300'>
           <img
             className='cursor-pointer object-cover h-full w-full rounded-lg absolute z-10'

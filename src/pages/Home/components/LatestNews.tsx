@@ -28,7 +28,7 @@ export default function LatestNews() {
   return (
     <div className='spacerSection group'>
       <AppTitleSection title='Bạn có biết ?' viewAll={false}></AppTitleSection>
-      <Link to='' className='grid grid-cols-3 gap-5'>
+      <Link to='' className='grid grid-cols-2 md:grid-cols-3 gap-5'>
         {listDataLastNew.slice(0, 3).map((item, index) => (
           <div className='shadow-sm' key={index}>
             <div className='h-[250px] w-full overflow-hidden'>

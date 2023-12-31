@@ -7,7 +7,7 @@ import { HiMenu } from 'react-icons/hi'
 import AppTooltip from './AppTooltip'
 
 export default function AppHeader() {
-  const listMenu = ['SẢN PHẨM', 'COMBO', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
+  const listMenu = ['SẢN PHẨM', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
   return (
     <div className='bg-white sticky top-0 shadow-sm z-20'>
       <div className='bg-primary text-white text-xs py-2'>

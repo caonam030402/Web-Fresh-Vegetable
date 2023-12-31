@@ -33,7 +33,7 @@ module.exports = {
           marginBottom: theme('spacing.20')
         },
         '.container': {
-          maxWidth: theme('columns.8xl'),
+          maxWidth: theme('columns.6xl'),
           marginLeft: 'auto',
           marginRight: 'auto',
           paddingLeft: theme('spacing.2'),
