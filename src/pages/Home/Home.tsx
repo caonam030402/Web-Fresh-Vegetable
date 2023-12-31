@@ -4,6 +4,7 @@ import { SwiperSlide } from 'swiper/react'
 import Featured from './components/Featured'
 import LatestNews from './components/LatestNews'
 import WhyChooseUs from './components/WhyChooseUs'
+import Category from './components/Category'
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       />
       <div className='container'>
         <Featured />
+        <Category />
         <WhyChooseUs />
         <LatestNews />
       </div>
