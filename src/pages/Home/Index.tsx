@@ -7,6 +7,7 @@ import Featured from './components/Featured'
 import LatestNews from './components/LasestNews'
 import Testimonial from './components/Testimonial'
 import AppSlide from 'src/components/AppSlide'
+import Sale from './components/Sale'
 
 export default function Home() {
   return (
@@ -28,6 +29,9 @@ export default function Home() {
         <Category />
         <PopularProducts />
         <WhyChooseUs />
+      </div>
+      <Sale />
+      <div className='container'>
         <Featured />
         <LatestNews />
         <Testimonial />
