@@ -1,12 +1,12 @@
 import { ImageSlide } from 'src/assets/images/slide'
 import { SwiperSlide } from 'swiper/react'
-import Featured from './components/Featured'
-import LatestNews from './components/LatestNews'
-import WhyChooseUs from './components/WhyChooseUs'
 import Category from './components/Category'
+import PopularProducts from './components/PopularProducts'
+import WhyChooseUs from './components/WhyChooseUs'
+import Featured from './components/Featured'
+import LatestNews from './components/LasestNews'
 import Testimonial from './components/Testimonial'
 import AppSlide from 'src/components/AppSlide'
-import PopularProducts from './components/PopularProducts'
 
 export default function Home() {
   return (
