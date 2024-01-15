@@ -28,12 +28,16 @@ module.exports = {
   plugins: [
     plugin(function ({ addComponents, theme }) {
       addComponents({
+        '.spacerSection': {
+          marginTop: theme('spacing.20'),
+          marginBottom: theme('spacing.20')
+        },
         '.container': {
-          maxWidth: theme('columns.7xl'),
+          maxWidth: theme('columns.6xl'),
           marginLeft: 'auto',
           marginRight: 'auto',
-          paddingLeft: theme('spacing.3'),
-          paddingRight: theme('spacing.3'),
+          paddingLeft: theme('spacing.2'),
+          paddingRight: theme('spacing.2'),
           '@screen sm': {
             paddingLeft: theme('spacing.4'),
             paddingRight: theme('spacing.4')
