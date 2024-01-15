@@ -5,8 +5,13 @@ import { FaChevronDown } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import AppTooltip from './AppTooltip'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.contexts'
+import Popover from './Popover'
 
 export default function AppHeader() {
+  const { profile } = useContext(AppContext)
+
   const listMenu = ['SẢN PHẨM', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
   return (
     <div className='bg-white sticky top-0 shadow-sm z-20'>
@@ -43,8 +48,27 @@ export default function AppHeader() {
               ))}
             </div>
           </div>
+
           <div className='flex gap-4 ml-14 justify-end'>
-            <AppTooltip content='Tài khoản'>
+            <Popover
+              renderPopover={
+                <div className='shadow-xl bg-slate-50 p-5 rounded-md'>
+                  <div className='font-medium text-sm text-greenDark'>{profile?.email}</div>
+                  <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
+                  <div className='flex flex-col gap-2 text-xs mt-2'>
+                    <Link to='' className='hover:text-primary'>
+                      Tài khoản của tôi
+                    </Link>
+                    <Link to='' className='hover:text-primary'>
+                      Đơn mua
+                    </Link>
+                    <Link to='' className='hover:text-primary'>
+                      Đăng xuất
+                    </Link>
+                  </div>
+                </div>
+              }
+            >
               <Link
                 type='button'
                 to=''
@@ -52,7 +76,7 @@ export default function AppHeader() {
               >
                 <FiUser size={20} className='text-greenDark' />
               </Link>
-            </AppTooltip>
+            </Popover>
             <AppTooltip content='Giỏ hàng'>
               <Link
                 to=''

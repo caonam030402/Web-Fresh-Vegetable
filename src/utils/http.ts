@@ -34,10 +34,9 @@ class Http {
         const data: AuthResponse = response.data
         this.accessToken = data.data.access_token
         this.refreshToken = data.data.refresh_token
-
+        profileLS.setProfileToLS(data.data.user)
         accessTokenLS.setAccessTokenToLS(this.accessToken)
         refreshTokenLS.setRefreshTokenToLS(this.refreshToken)
-        profileLS.setProfileToLS(data.data.user)
       } else if (url == pathRoutes.logout) {
         this.accessToken = ''
         this.refreshToken = ''

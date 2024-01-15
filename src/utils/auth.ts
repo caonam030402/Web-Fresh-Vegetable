@@ -22,7 +22,7 @@ export class profileLS {
   static setProfileToLS = (profile: User) => {
     return localStorage.setItem('profile', JSON.stringify(profile))
   }
-  static getAccessTokenFromLS = () => {
+  static getProfileFromLS = () => {
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(profile) : null
   }
