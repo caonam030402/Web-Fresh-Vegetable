@@ -1,7 +1,7 @@
 import { BiShoppingBag } from 'react-icons/bi'
 import { MdOutlineStar } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/rules'
+import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
 
 interface Props {
   name: string

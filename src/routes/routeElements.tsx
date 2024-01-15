@@ -4,6 +4,7 @@ import { pathRoutes } from 'src/configs/path.routes'
 import MainLayout from 'src/layouts/MainLayout'
 import About from 'src/pages/About/Index'
 import Home from 'src/pages/Home/Index'
+import Login from 'src/pages/Login'
 
 export default function routeElements() {
   const routeElements = useRoutes([
@@ -17,11 +18,18 @@ export default function routeElements() {
       )
     },
     {
-      index: true,
       path: pathRoutes.about,
       element: (
         <MainLayout>
           <About />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.login,
+      element: (
+        <MainLayout>
+          <Login />
         </MainLayout>
       )
     }
