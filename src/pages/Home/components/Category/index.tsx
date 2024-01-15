@@ -40,7 +40,10 @@ export default function Category() {
         spaceBetween={30}
         classNameSwiper='z-0 w-full'
         listItem={listCategory.map((item, index) => (
-          <SwiperSlide className='bg-white shadow-sm hover:bg-primary hover:bg-opacity-10 border ease-in-out duration-300 border-white hover:border-primary rounded-2xl cursor-pointer flex flex-col items-center py-6'>
+          <SwiperSlide
+            key={index}
+            className='bg-white shadow-sm hover:bg-primary hover:bg-opacity-10 border ease-in-out duration-300 border-white hover:border-primary rounded-2xl cursor-pointer flex flex-col items-center py-6'
+          >
             <Link to='' key={index} className='flex items-center flex-col justify-center'>
               <img src={item?.image} alt='' className='w-[50%] mb-1' />
               <h2 className='text-center text-greenDark text-base'>{item?.name}</h2>

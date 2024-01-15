@@ -1,13 +1,16 @@
-import { createContext } from 'react'
+// import { createContext, useState } from 'react'
 
-interface AppContextInterface {}
+// interface AppContextInterface {
+//   isAuthenticated: boolean
+// }
 
-const initialAppContext: AppContextInterface = {}
+// const initialAppContext: AppContextInterface = {
+//   setIsAuthenticated: () => null
+// }
 
-export const AppContext = createContext<AppContextInterface>(initialAppContext)
+// export const AppContext = createContext<AppContextInterface>(initialAppContext)
 
-import React from 'react'
-
-export default function AppProvider({ children }: { children: React.ReactNode }) {
-  return <AppContext.Provider value={{}}>{children}</AppContext.Provider>
-}
+// export default function AppProvider({ children }: { children: React.ReactNode }) {
+//   const [isAuthenticated, setIsAuthenticated] = useState(initialAppContext.isAuthenticated)
+//   return <AppContext.Provider value={{}}>{children}</AppContext.Provider>
+// }

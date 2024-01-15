@@ -9,10 +9,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { isAxiosUnprocessableEntityError, profileLS } from 'src/utils/auth'
 import { pathRoutes } from 'src/configs/path.routes'
 
-type FormData = Pick<Schema, 'email' | 'password'>
-const LoginSchema = schema.pick(['email', 'password'])
+type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
+const RegisterSchema = schema.pick(['email', 'password', 'confirm_password'])
 
-export default function Login() {
+export default function Register() {
   const {
     register,
     handleSubmit,
@@ -20,14 +20,14 @@ export default function Login() {
     watch,
     formState: { errors }
   } = useForm<FormData>({
-    resolver: yupResolver(LoginSchema)
+    resolver: yupResolver(RegisterSchema)
   })
 
-  const loginMutation = useMutation({ mutationFn: (body: FormData) => authService.login(body) })
+  const registerMutation = useMutation({ mutationFn: (body: FormData) => authService.register(body) })
   const navigate = useNavigate()
 
   const onSubmit = handleSubmit((data) => {
-    loginMutation.mutate(data, {
+    registerMutation.mutate(data, {
       onSuccess: (data) => {
         profileLS.setProfileToLS(data.data.data.user)
         navigate('/')
@@ -50,15 +50,21 @@ export default function Login() {
   return (
     <div className='mx-auto bg-primary py-[80px] text-center'>
       <form onSubmit={onSubmit} className='w-[60vh] mx-auto bg-white p-8 rounded-md shadow-md'>
-        <h1 className='text-2xl text-greenDark font-semibold mb-6'>Đăng Nhập</h1>
+        <h1 className='text-2xl text-greenDark font-semibold mb-6'>Đăng Ký</h1>
         <AppInput errorMessage={errors.email?.message} placeholder='Email' name='email' register={register} />
         <AppInput errorMessage={errors.password?.message} placeholder='Password' name='password' register={register} />
+        <AppInput
+          errorMessage={errors.confirm_password?.message}
+          placeholder='Comfirm Password'
+          name='confirm_password'
+          register={register}
+        />
         <AppButton type='submit' widthIcon={false} className='w-full rounded-md'>
-          ĐĂNG NHẬP
+          ĐĂNG KÝ
         </AppButton>
         <div className='text-xs mt-4'>
-          <span>Bạn chưa có tài khoản?</span>
-          <Link to={pathRoutes.register} className='ml-1 font-bold text-greenDark'>
+          <span>Bạn đã có tài khoản?</span>
+          <Link to={pathRoutes.login} className='ml-1 font-bold text-greenDark'>
             Đăng ký
           </Link>
         </div>
