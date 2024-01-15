@@ -17,7 +17,8 @@ interface Props {
   pagination: boolean
   autoplay?: boolean
   colorBtn?: string
-  hiddenBtn?: boolean}
+  hiddenBtn?: boolean
+}
 
 export default function AppSlide({
   colorBtn = '#003f1f',

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { pathImage } from 'src/configs/path.image'
+import { pathImage } from 'src/constants/path.image'
 import { FaFacebook, FaShare } from 'react-icons/fa'
 
-export default function AppFooter() {
+export default function Footer() {
   return (
     <div className='bg-white py-16'>
       <div className='container grid md:grid-cols-4 gap-10 col-span-2'>

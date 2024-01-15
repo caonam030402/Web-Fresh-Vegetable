@@ -1,18 +1,18 @@
-import { pathImage } from 'src/configs/path.image'
+import { pathImage } from 'src/constants/path.image'
 import { FiUser, FiShoppingCart } from 'react-icons/fi'
-import AppSearchBar from './AppSearchBar'
+import AppSearchBar from '../molecules/AppSearchBar'
 import { FaChevronDown } from 'react-icons/fa6'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
-import AppTooltip from './AppTooltip'
+import Tooltip from './Tooltip'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.contexts'
-import Popover from './Popover'
 import { useMutation } from 'react-query'
 import { authService } from 'src/services/auth.service'
-import { pathRoutes } from 'src/configs/path.routes'
+import { pathRoutes } from 'src/constants/path.routes'
+import Popover from './Popover'
 
-export default function AppHeader() {
+export default function Header() {
   const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
 
@@ -94,7 +94,7 @@ export default function AppHeader() {
                 <FiUser size={20} className='text-greenDark' />
               </Link>
             </Popover>
-            <AppTooltip content='Giỏ hàng'>
+            <Tooltip content='Giỏ hàng'>
               <Link
                 to=''
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
@@ -104,7 +104,7 @@ export default function AppHeader() {
                   10
                 </div>
               </Link>
-            </AppTooltip>
+            </Tooltip>
           </div>
         </div>
         <div className='lg:hidden block mt-6'>

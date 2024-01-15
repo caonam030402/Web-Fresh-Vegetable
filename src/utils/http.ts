@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios'
-import { pathRoutes } from 'src/constants/paths'
 import {
   clearLS,
   getAccessTokenFromLS,
@@ -9,6 +8,7 @@ import {
   setRefreshTokenToLS
 } from './auth'
 import { config } from 'src/constants/config'
+import { pathRoutes } from 'src/constants/path.routes'
 
 class Http {
   instance: AxiosInstance

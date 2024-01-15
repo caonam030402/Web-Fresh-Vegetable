@@ -8,7 +8,7 @@ interface Props {
   location?: Location
 }
 
-export default function AppTooltip({ content, children, location = 'bottom' }: Props) {
+export default function Tooltip({ content, children, location = 'bottom' }: Props) {
   return (
     <div className='relative group'>
       {children}

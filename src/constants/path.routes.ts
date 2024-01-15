@@ -1,8 +1,8 @@
 export const pathRoutes = {
   home: '/',
   login: '/login',
-  register: '/register',
   logout: '/logout',
+  register: '/register',
   cart: '/cart',
   productList: '/product-list',
   productDetail: '/product-detail',

@@ -11,7 +11,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   isEyePassword?: boolean
 }
 
-export default function AppInput({ register, name, rules, errorMessage, ...rest }: Props) {
+export default function Input({ register, name, rules, errorMessage, ...rest }: Props) {
   const registerResult = register && name ? register(name, rules) : {}
 
   return (

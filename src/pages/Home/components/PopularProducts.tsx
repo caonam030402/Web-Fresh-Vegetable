@@ -1,5 +1,5 @@
-import AppTitleSection from 'src/components/AppTitleSection'
-import ProductItem from 'src/components/ProductItem'
+import TitleSection from 'src/components/organisms/TitleSection'
+import ProductItem from 'src/components/templates/ProductItem'
 
 const listProductData = [
   {
@@ -88,7 +88,7 @@ const listProductData = [
 export default function PopularProducts() {
   return (
     <div>
-      <AppTitleSection viewAll={true} title='Sản phẩm nổi bật' />
+      <TitleSection viewAll={true} title='Sản phẩm nổi bật' />
       <div className='grid-cols-2 grid gap-7 rounded-sm md:grid-cols-3 lg:grid-cols-5'>
         {listProductData.map((item, index) => (
           <div key={index} className='col-span-1'>

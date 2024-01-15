@@ -21,7 +21,6 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const [isAuthenticated, setIsAuthenticated] = useState(initialAppContext.isAuthenticated)
   const [profile, setProfile] = useState(initialAppContext.profile)
 
-  console.log(profile)
   return (
     <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated, profile, setProfile }}>
       {children}

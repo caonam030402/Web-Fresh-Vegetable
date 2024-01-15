@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IoArrowForward } from 'react-icons/io5'
-import AppTitleSection from 'src/components/AppTitleSection'
+import TitleSection from 'src/components/organisms/TitleSection'
 
 const listDataLastNew = [
   {
@@ -27,7 +27,7 @@ const listDataLastNew = [
 export default function LatestNews() {
   return (
     <div className='spacerSection group'>
-      <AppTitleSection title='Bạn có biết ?' viewAll={false}></AppTitleSection>
+      <TitleSection title='Bạn có biết ?' viewAll={false}></TitleSection>
       <Link to='' className='grid grid-cols-2 md:grid-cols-3 gap-5'>
         {listDataLastNew.slice(0, 3).map((item, index) => (
           <div className='shadow-sm' key={index}>

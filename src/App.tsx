@@ -1,4 +1,4 @@
-import AppFloatingContact from './components/AppFloatingContact'
+import FloatingContact from './components/organisms/FloatingContact'
 import routeElements from './routes/routeElements'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <div className=''>
       {routes}
       <div className='fixed bottom-[7%] right-[2%] z-10'>
-        <AppFloatingContact />
+        <FloatingContact />
       </div>
     </div>
   )

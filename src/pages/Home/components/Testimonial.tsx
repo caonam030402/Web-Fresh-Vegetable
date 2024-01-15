@@ -1,5 +1,5 @@
-import AppSlide from 'src/components/AppSlide'
-import AppTitleSection from 'src/components/AppTitleSection'
+import AppSlide from 'src/components/organisms/AppSlide'
+import TitleSection from 'src/components/organisms/TitleSection'
 import { SwiperSlide } from 'swiper/react'
 import { RiDoubleQuotesR } from 'react-icons/ri'
 import { MdOutlineStar } from 'react-icons/md'
@@ -39,7 +39,7 @@ const listDataTestimonial = [
 export default function Testimonial() {
   return (
     <div className='spacerSection'>
-      <AppTitleSection viewAll={false} title='Khách hàng nói gì về chúng tôi ?' />
+      <TitleSection viewAll={false} title='Khách hàng nói gì về chúng tôi ?' />
       <AppSlide
         autoplay={true}
         pagination={false}

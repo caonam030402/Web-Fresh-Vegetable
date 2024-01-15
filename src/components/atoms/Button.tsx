@@ -11,13 +11,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: SizeButton
 }
 
-export default function AppButton({
-  className,
-  children,
-  widthIcon = true,
-  background = 'bg-primary',
-  ...rest
-}: Props) {
+export default function Button({ className, children, widthIcon = true, background = 'bg-primary', ...rest }: Props) {
   return (
     <button
       className={`${background} $ hover:opacity-90 hover:shadow-md group ease duration-300 text-xs px-[24px] py-[10px] rounded-full text-wrap text-white flex items-center gap-2 ${className}`}

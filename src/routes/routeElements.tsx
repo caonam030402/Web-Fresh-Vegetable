@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import { pathRoutes } from 'src/configs/path.routes'
+import { pathRoutes } from 'src/constants/path.routes'
 import { AppContext } from 'src/contexts/app.contexts'
 import MainLayout from 'src/layouts/MainLayout'
 import About from 'src/pages/About/Index'

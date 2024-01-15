@@ -1,4 +1,3 @@
-import { pathRoutes } from 'src/constants/paths'
 import { http } from 'src/utils/http'
 
 export const authService = {

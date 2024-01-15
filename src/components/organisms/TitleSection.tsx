@@ -6,7 +6,7 @@ interface Props {
   viewAll: boolean
 }
 
-export default function AppTitleSection({ title, viewAll = true }: Props) {
+export default function TitleSection({ title, viewAll = true }: Props) {
   return (
     <div className={`${viewAll && 'flex'} items-center justify-between mb-7`}>
       <h1 className='uppercase text-2xl font-bold text-center text-greenDark'>{title}</h1>

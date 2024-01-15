@@ -6,7 +6,7 @@ import WhyChooseUs from './components/WhyChooseUs'
 import Featured from './components/Featured'
 import LatestNews from './components/LasestNews'
 import Testimonial from './components/Testimonial'
-import AppSlide from 'src/components/AppSlide'
+import AppSlide from 'src/components/organisms/AppSlide'
 import Sale from './components/Sale'
 
 export default function Home() {

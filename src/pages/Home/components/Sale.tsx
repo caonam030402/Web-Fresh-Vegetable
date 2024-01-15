@@ -1,5 +1,5 @@
-import AppButton from 'src/components/AppButton'
-import { pathImage } from 'src/configs/path.image'
+import Button from 'src/components/atoms/Button'
+import { pathImage } from 'src/constants/path.image'
 
 export default function Sale() {
   return (
@@ -34,7 +34,7 @@ export default function Sale() {
               <p className='text-[10px] leading-3'>SECS</p>
             </div>
           </div>
-          <AppButton>Mua Ngay</AppButton>
+          <Button>Mua Ngay</Button>
         </div>
         <div className='p-3'>
           <img src={pathImage.girl_holding_bag} alt='' />

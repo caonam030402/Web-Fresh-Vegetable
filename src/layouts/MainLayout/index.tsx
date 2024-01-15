@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BeatLoader } from 'react-spinners'
-import AppFooter from 'src/components/AppFooter'
-import AppHeader from 'src/components/AppHeader'
+import Footer from 'src/components/organisms/Footer'
+import Header from 'src/components/organisms/Header'
 
 interface Props {
   children?: React.ReactNode
@@ -19,7 +19,7 @@ export default function MainLayout({ children }: Props) {
 
   return (
     <div>
-      <AppHeader />
+      <Header />
       {loading && (
         <div className='fixed inset-0 z-30 h-full w-full bg-white/90 transition-all'>
           <BeatLoader
@@ -30,7 +30,7 @@ export default function MainLayout({ children }: Props) {
         </div>
       )}
       {children}
-      <AppFooter />
+      <Footer />
     </div>
   )
 }

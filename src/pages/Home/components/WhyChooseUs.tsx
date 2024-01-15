@@ -1,6 +1,6 @@
 import { FaCheck } from 'react-icons/fa6'
-import AppButton from 'src/components/AppButton'
-import { pathImage } from 'src/configs/path.image'
+import Button from 'src/components/atoms/Button'
+import { pathImage } from 'src/constants/path.image'
 
 export default function WhyChooseUs() {
   return (
@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
               </div>
             </div>
           </div>
-          <AppButton>Mua ngay</AppButton>
+          <Button>Mua ngay</Button>
         </div>
       </div>
     </div>
