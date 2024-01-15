@@ -2,15 +2,32 @@ import { pathImage } from 'src/configs/path.image'
 import { FiUser, FiShoppingCart } from 'react-icons/fi'
 import AppSearchBar from './AppSearchBar'
 import { FaChevronDown } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import AppTooltip from './AppTooltip'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.contexts'
 import Popover from './Popover'
+import { useMutation } from 'react-query'
+import { authService } from 'src/services/auth.service'
+import { pathRoutes } from 'src/configs/path.routes'
 
 export default function AppHeader() {
-  const { profile } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
+
+  const logoutMutation = useMutation({
+    mutationFn: authService.logout,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+      navigate(pathRoutes.login)
+      setProfile(null)
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
 
   const listMenu = ['SẢN PHẨM', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
   return (
@@ -55,16 +72,16 @@ export default function AppHeader() {
                 <div className='shadow-xl bg-slate-50 p-5 rounded-md'>
                   <div className='font-medium text-sm text-greenDark'>{profile?.email}</div>
                   <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
-                  <div className='flex flex-col gap-2 text-xs mt-2'>
+                  <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
                     <Link to='' className='hover:text-primary'>
                       Tài khoản của tôi
                     </Link>
                     <Link to='' className='hover:text-primary'>
                       Đơn mua
                     </Link>
-                    <Link to='' className='hover:text-primary'>
+                    <button onClick={handleLogout} className='hover:text-primary'>
                       Đăng xuất
-                    </Link>
+                    </button>
                   </div>
                 </div>
               }

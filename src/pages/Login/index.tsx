@@ -6,13 +6,16 @@ import { Schema, schema } from 'src/utils/rules'
 import { useMutation } from 'react-query'
 import { authService } from 'src/services/auth.service'
 import { Link, useNavigate } from 'react-router-dom'
-import { isAxiosUnprocessableEntityError, profileLS } from 'src/utils/auth'
+import { isAxiosUnprocessableEntityError, setProfileToLS } from 'src/utils/auth'
 import { pathRoutes } from 'src/configs/path.routes'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.contexts'
 
 type FormData = Pick<Schema, 'email' | 'password'>
 const LoginSchema = schema.pick(['email', 'password'])
 
 export default function Login() {
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const {
     register,
     handleSubmit,
@@ -29,7 +32,8 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
-        profileLS.setProfileToLS(data.data.data.user)
+        setIsAuthenticated(true)
+        setProfile(data.data.data.user)
         navigate('/')
       },
       onError: (errors) => {
@@ -52,7 +56,13 @@ export default function Login() {
       <form onSubmit={onSubmit} className='w-[60vh] mx-auto bg-white p-8 rounded-md shadow-md'>
         <h1 className='text-2xl text-greenDark font-semibold mb-6'>Đăng Nhập</h1>
         <AppInput errorMessage={errors.email?.message} placeholder='Email' name='email' register={register} />
-        <AppInput errorMessage={errors.password?.message} placeholder='Password' name='password' register={register} />
+        <AppInput
+          type='password'
+          errorMessage={errors.password?.message}
+          placeholder='Password'
+          name='password'
+          register={register}
+        />
         <AppButton type='submit' widthIcon={false} className='w-full rounded-md'>
           ĐĂNG NHẬP
         </AppButton>

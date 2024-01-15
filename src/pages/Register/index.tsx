@@ -6,7 +6,7 @@ import { Schema, schema } from 'src/utils/rules'
 import { useMutation } from 'react-query'
 import { authService } from 'src/services/auth.service'
 import { Link, useNavigate } from 'react-router-dom'
-import { isAxiosUnprocessableEntityError, profileLS } from 'src/utils/auth'
+import { isAxiosUnprocessableEntityError, setProfileToLS } from 'src/utils/auth'
 import { pathRoutes } from 'src/configs/path.routes'
 
 type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
@@ -29,7 +29,7 @@ export default function Register() {
   const onSubmit = handleSubmit((data) => {
     registerMutation.mutate(data, {
       onSuccess: (data) => {
-        profileLS.setProfileToLS(data.data.data.user)
+        setProfileToLS(data.data.data.user)
         navigate('/')
       },
       onError: (errors) => {
@@ -52,8 +52,15 @@ export default function Register() {
       <form onSubmit={onSubmit} className='w-[60vh] mx-auto bg-white p-8 rounded-md shadow-md'>
         <h1 className='text-2xl text-greenDark font-semibold mb-6'>Đăng Ký</h1>
         <AppInput errorMessage={errors.email?.message} placeholder='Email' name='email' register={register} />
-        <AppInput errorMessage={errors.password?.message} placeholder='Password' name='password' register={register} />
         <AppInput
+          type='password'
+          errorMessage={errors.password?.message}
+          placeholder='Password'
+          name='password'
+          register={register}
+        />
+        <AppInput
+          type='password'
           errorMessage={errors.confirm_password?.message}
           placeholder='Comfirm Password'
           name='confirm_password'

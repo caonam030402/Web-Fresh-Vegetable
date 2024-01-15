@@ -1,5 +1,5 @@
 import { SetStateAction, createContext, useState } from 'react'
-import { accessTokenLS, profileLS } from 'src/utils/auth'
+import { getAccessTokenFromLS, getProfileFromLS } from 'src/utils/auth'
 
 interface AppContextInterface {
   isAuthenticated: boolean
@@ -9,9 +9,9 @@ interface AppContextInterface {
 }
 
 const initialAppContext: AppContextInterface = {
-  isAuthenticated: Boolean(accessTokenLS.getAccessTokenFromLS()),
-  profile: profileLS.getProfileFromLS(),
+  isAuthenticated: Boolean(getAccessTokenFromLS()),
   setIsAuthenticated: () => null,
+  profile: getProfileFromLS(),
   setProfile: () => null
 }
 
@@ -21,6 +21,7 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const [isAuthenticated, setIsAuthenticated] = useState(initialAppContext.isAuthenticated)
   const [profile, setProfile] = useState(initialAppContext.profile)
 
+  console.log(profile)
   return (
     <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated, profile, setProfile }}>
       {children}
