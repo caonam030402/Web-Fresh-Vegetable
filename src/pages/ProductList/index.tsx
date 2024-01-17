@@ -9,6 +9,7 @@ import Button from 'src/components/atoms/Button'
 import { InputNumber } from 'src/components/atoms/InputNumber'
 import { productService } from 'src/services/product.service'
 import useQueryConfig from 'src/hooks/useQueryConfig'
+import AsideFitter from './components/AsideFitter'
 
 const listProductData = [
   {
@@ -115,50 +116,7 @@ export default function ProductList() {
   return (
     <div className='container grid grid-cols-10 gap-7 my-10'>
       <div className='col-span-2'>
-        <div>
-          <div className='flex items-center justify-between'>
-            <span className='text-zinc-900 text-base font-medium capitalize'>Tất cả danh mục</span>
-            <MdKeyboardArrowUp className='text-lg' />
-          </div>
-          <div className='mt-2 flex flex-col gap-1'>
-            {categoriesData?.data.data.map((item, index) => {
-              return (
-                <div key={index} className='flex items-center gap-1'>
-                  <input type='radio' id={item._id} className={`w-[18px] flex-shrink border-gray-100 accent-primary`} />
-                  <label htmlFor={item._id} className='text-zinc-900 text-sm'>
-                    {item.name}
-                  </label>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        <div className='w-full h-[0.5px] bg-gray-300/50 my-5'></div>
-        <div>
-          <div className='flex items-center justify-between'>
-            <span className='text-zinc-900 text-base font-medium capitalize'>Khoảng Giá</span>
-            <MdKeyboardArrowUp className='text-lg' />
-          </div>
-          <div className='flex gap-2'>
-            <InputNumber placeholder='₫ TỪ'></InputNumber>
-            <InputNumber placeholder='₫ ĐẾN'></InputNumber>
-          </div>
-          <Button className='w-full uppercase py-[8px] rounded-md' widthIcon={false}>
-            Áp dụng
-          </Button>
-        </div>
-        <div className='w-full h-[0.5px] bg-gray-300/50 my-5'></div>
-        <div>
-          <div className='flex items-center justify-between'>
-            <span className='text-zinc-900 text-base font-medium capitalize'>Đánh giá</span>
-            <MdKeyboardArrowUp className='text-lg' />
-          </div>
-          <RatingStars />
-        </div>
-        <div className='w-full h-[0.5px] bg-gray-300/50 my-5'></div>
-        <Button className='w-full uppercase py-[8px] rounded-md' widthIcon={false}>
-          Xóa tất cả
-        </Button>
+        <AsideFitter categories={categoriesData?.data.data} queryConfig={queryConfig} />
       </div>
       <div className='col-span-8 grid-cols-2 grid gap-5 rounded-sm md:grid-cols-3 lg:grid-cols-4'>
         {productData?.data.data.products.map((item, index) => (

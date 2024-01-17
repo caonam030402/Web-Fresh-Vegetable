@@ -27,10 +27,10 @@ export default function ProductItem({ product }: Props) {
       <div className='p-4 rounded-b-md bg-white shadow-sm'>
         <div className=' flex justify-between'>
           <div>
-            <div className='text-sm line-clamp-1 font-semibold text-greenDark'>{product.name}</div>
-            <div>
-              <span className='text-[13px] font-semibold mr-2'>₫{formatCurrency(product.price)}</span>
-              <span className='line-through text-xs caret-neutral-500'>
+            <div className='text-sm line-clamp-2 font-semibold text-greenDark'>{product.name}</div>
+            <div className=''>
+              <span className='text-[13px] font-semibold mr-1'>₫{formatCurrency(product.price)}</span>
+              <span className='line-through text-[10px] caret-neutral-500'>
                 ₫{formatCurrency(product.price_before_discount)}
               </span>
             </div>
