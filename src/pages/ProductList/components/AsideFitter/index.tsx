@@ -20,7 +20,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
           <span className='text-zinc-900 text-base font-medium capitalize'>Tất cả danh mục</span>
           <MdKeyboardArrowUp className='text-lg' />
         </div>
-        <div className='mt-2 flex flex-col gap-1'>
+        <div className='mt-2 flex flex-col gap-2'>
           {categories?.map((item, index) => {
             const isActive = category === item._id
             return (
@@ -33,7 +33,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
                   }).toString()
                 }}
                 key={index}
-                className='flex items-center gap-1'
+                className={`flex items-center gap-1 }`}
               >
                 <input
                   checked={isActive && true}
@@ -41,7 +41,10 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
                   id={item._id}
                   className={`w-[18px] flex-shrink border-gray-100 accent-primary`}
                 />
-                <label htmlFor={item._id} className='text-zinc-900 text-sm'>
+                <label
+                  htmlFor={item._id}
+                  className={` text-sm ${isActive ? 'text-zinc-950 font-medium' : 'text-zinc-900'}`}
+                >
                   {item.name}
                 </label>
               </Link>
@@ -69,7 +72,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
           <span className='text-zinc-900 text-base font-medium capitalize'>Đánh giá</span>
           <MdKeyboardArrowUp className='text-lg' />
         </div>
-        <RatingStars />
+        <RatingStars queryConfig={queryConfig} />
       </div>
       <div className='w-full h-[0.5px] bg-gray-300/50 my-5'></div>
       <Button className='w-full uppercase py-[8px] rounded-md' widthIcon={false}>
