@@ -7,7 +7,7 @@ interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function InputNumberInner(
-  { name, errorMessage, value = '', onChange, ...rest },
+  { name, errorMessage, value = '', onChange, classNameInput, ...rest },
   ref
 ) {
   const [localValue, setLocalValue] = useState<string>(value as string)
@@ -23,9 +23,10 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(functi
   }
 
   return (
-    <div className='w-full relative my-2'>
+    <div className='w-full relative'>
       <input
-        className={`text-[13px] px-3 focus:border-primary ease-in-out duration-300 w-full rounded-md outline-none border-neutral-300 placeholder:text-sm border py-2 text-sm ${
+        value={value}
+        className={`text-[13px] px-3 focus:border-primary ease-in-out duration-300 w-full rounded-md outline-none border-neutral-300 placeholder:text-sm border py-2 text-sm ${classNameInput} ${
           errorMessage !== undefined && 'bg-red-100 border-red-600 focus:border-red-900'
         }`}
         type='text'
@@ -33,7 +34,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(functi
         {...rest}
         ref={ref}
       />
-      <h1 className='text-left text-xs mt-2 text-red-600'>{errorMessage}</h1>
+      <h1 className={`text-left text-xs text-red-600 ${errorMessage && 'mt-2'}`}>{errorMessage}</h1>
     </div>
   )
 })

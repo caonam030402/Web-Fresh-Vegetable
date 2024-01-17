@@ -1,16 +1,21 @@
+import { useState } from 'react'
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
+import { toast } from 'react-toastify'
 import Button from 'src/components/atoms/Button'
 import ProductRating from 'src/components/molecules/ProductRating'
 import ControllerQuanlity from 'src/components/organisms/ControllerQuanlity'
 import ProductItem from 'src/components/organisms/ProductItem'
 import { pathRoutes } from 'src/constants/path.routes'
+import { purchasesStatus } from 'src/constants/purchase'
 import { productService } from 'src/services/product.service'
+import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency, formatNumberToSocialStyle, generateNameId, getIdFromNameId, rateSale } from 'src/utils/utils'
 
 export default function ProductDetail() {
+  const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
 
   const id = getIdFromNameId(nameId as string)
@@ -31,6 +36,24 @@ export default function ProductDetail() {
     enabled: Boolean(productDetail),
     staleTime: 3 * 60 * 1000
   })
+  const hanleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
+
+  const addToCartMutation = useMutation(purchaseService.addToCart)
+  const queryClient = useQueryClient()
+
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { buy_count: buyCount, product_id: productDetail?._id as string },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, { autoClose: 1000 })
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
+        }
+      }
+    )
+  }
 
   return (
     <div className='container my-10'>
@@ -66,11 +89,18 @@ export default function ProductDetail() {
           {/* <div className='h-[1px] w-full bg-slate-200 mt-3'></div> */}
           <div className='flex items-center gap-3 mt-6 text-xs'>
             <span>Số lượng</span>
-            <ControllerQuanlity />
+            <ControllerQuanlity
+              max={Number(productDetail?.quantity)}
+              value={buyCount}
+              onIncrease={hanleBuyCount}
+              onType={hanleBuyCount}
+              onFocusOut={hanleBuyCount}
+              onDecrease={hanleBuyCount}
+            />
             <span>{productDetail?.quantity} Sản phẩm có sẵn</span>
           </div>
           <div className='flex gap-3 mt-8'>
-            <Button className='border-primary bg-primary/0 capitalize border' widthIcon={false}>
+            <Button onClick={addToCart} className='border-primary bg-primary/0 capitalize border' widthIcon={false}>
               <div className='flex items-center gap-1 text-primary'>
                 <MdOutlineShoppingCartCheckout className='text-lg' />
                 <span>Thêm vào giỏ hàng</span>

@@ -26,7 +26,8 @@ class Http {
     })
     this.instance.interceptors.request.use(
       (config) => {
-        if (config.headers.Authorization && this.accessToken) {
+        if (this.accessToken && config.headers) {
+          config.headers.authorization = this.accessToken
           return config
         }
         return config

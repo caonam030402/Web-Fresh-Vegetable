@@ -2,7 +2,7 @@ import { http } from 'src/utils/http'
 
 const URL = 'purchases'
 
-export const purchaseApi = {
+export const purchaseService = {
   addToCart(body: { product_id: string; buy_count: number }) {
     return http.post<SuccessResponse<Purchase>>(`${URL}/add-to-cart`, body)
   },
