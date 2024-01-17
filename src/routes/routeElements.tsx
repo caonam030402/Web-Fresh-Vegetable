@@ -6,6 +6,8 @@ import MainLayout from 'src/layouts/MainLayout'
 import About from 'src/pages/About/Index'
 import Home from 'src/pages/Home/Index'
 import Login from 'src/pages/Login'
+import ProductDetail from 'src/pages/ProductDetail'
+import ProductList from 'src/pages/ProductList'
 import Register from 'src/pages/Register'
 
 export default function routeElements() {
@@ -34,6 +36,22 @@ export default function routeElements() {
       element: (
         <MainLayout>
           <About />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.productDetail,
+      element: (
+        <MainLayout>
+          <ProductDetail />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.productList,
+      element: (
+        <MainLayout>
+          <ProductList />
         </MainLayout>
       )
     },

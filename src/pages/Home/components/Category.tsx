@@ -27,11 +27,10 @@ const listCategory = [
 ]
 
 export default function Category() {
-  console.log(listCategory.length)
   return (
     <div className='spacerSection'>
       <TitleSection title='Danh mục sản phẩm' viewAll={true}></TitleSection>
-      <div className={`grid w-full grid-cols-${listCategory.length} gap-6`}>
+      <div className={`grid w-full grid-cols-5 gap-6`}>
         {listCategory.map((item, index) => (
           <div
             key={index}

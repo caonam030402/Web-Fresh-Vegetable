@@ -13,7 +13,7 @@ export default function MainLayout({ children }: Props) {
   useEffect(() => {
     setLoading(true)
     setTimeout(() => {
-      setLoading(false)
+      setLoading(false) 
     }, 1000)
   }, [])
 

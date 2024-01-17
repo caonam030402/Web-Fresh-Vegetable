@@ -1,5 +1,5 @@
 import TitleSection from 'src/components/organisms/TitleSection'
-import ProductItem from 'src/components/templates/ProductItem'
+import ProductItem from 'src/components/organisms/ProductItem'
 
 const listProductData = [
   {

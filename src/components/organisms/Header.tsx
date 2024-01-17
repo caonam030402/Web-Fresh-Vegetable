@@ -11,6 +11,7 @@ import { useMutation } from 'react-query'
 import { authService } from 'src/services/auth.service'
 import { pathRoutes } from 'src/constants/path.routes'
 import Popover from './Popover'
+import Button from '../atoms/Button'
 
 export default function Header() {
   const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
@@ -49,7 +50,7 @@ export default function Header() {
           <Link className='md:hidden absolute w-[100px] right-1/2 translate-x-[50%] md:mr-10 mr-0 ' to=''>
             <img src={pathImage.logo} alt='' className='' />
           </Link>
-          <Link className='md:block hidden md:mr-10 mr-0 ' to=''>
+          <Link className='md:block hidden md:mr-10 mr-0 ' to={pathRoutes.productList}>
             <img src={pathImage.logo} alt='' className='w-full' />
           </Link>
           <div className='flex-1'>
@@ -58,7 +59,7 @@ export default function Header() {
             </div>
             <div className='lg:flex hidden items-center gap-x-10 gap-y-3 mt-4 flex-wrap'>
               {listMenu.map((item, index) => (
-                <Link to='' className='text-greenDark flex items-center gap-1 font-bold text-sm' key={index}>
+                <Link key={index} to='' className='text-greenDark flex items-center gap-1 font-bold text-sm'>
                   {item}
                   <FaChevronDown size={13} />
                 </Link>
@@ -94,7 +95,42 @@ export default function Header() {
                 <FiUser size={20} className='text-greenDark' />
               </Link>
             </Popover>
-            <Tooltip content='Giỏ hàng'>
+            <Popover
+              renderPopover={
+                <div className=' w-[25vw] bg-white shadow-lg rounded-md'>
+                  <h1 className='px-3 font-bold pt-3 mb-2 flex justify-between text-sm text-greenDark'>
+                    Sản phẩm mới thêm
+                  </h1>
+                  {Array(1)
+                    .fill(0)
+                    .map((item, index) => {
+                      return (
+                        <Link key={index} to='' className='flex p-3 ease duration-300 hover:bg-primary/10'>
+                          <div className='w-10 h-10 mr-3'>
+                            <img
+                              className='w-full h-full object-cover rounded-sm'
+                              src='https://cdn.pixabay.com/photo/2016/07/16/20/48/peaches-1522680_640.jpg'
+                              alt=''
+                            />
+                          </div>
+                          <div className='flex justify-between flex-1 gap-3'>
+                            <div className='line-clamp-2 text-xs'>
+                              Tía tô Hữu cơ Tía tô Hữu cơ Tía tô Hữu cơ Tía tô Hữu cơ
+                            </div>
+                            <div className='text-xs text-greenDark'>25.000đ</div>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  <div className='px-3 pb-3 mt-1 flex justify-between items-center'>
+                    <h1 className='text-[10px]'> 15 thêm vào giỏ hàng</h1>
+                    <Button size='medium' className='text-xs py-[9px]' widthIcon={false}>
+                      Xem Giỏ Hàng
+                    </Button>
+                  </div>
+                </div>
+              }
+            >
               <Link
                 to=''
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
@@ -104,7 +140,7 @@ export default function Header() {
                   10
                 </div>
               </Link>
-            </Tooltip>
+            </Popover>
           </div>
         </div>
         <div className='lg:hidden block mt-6'>
