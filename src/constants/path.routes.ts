@@ -5,7 +5,7 @@ export const pathRoutes = {
   register: '/register',
   cart: '/cart',
   productList: '/product-list',
-  productDetail: '/product-detail',
+  productDetail: ':nameId',
   account: '/account',
   about: '/about'
 }

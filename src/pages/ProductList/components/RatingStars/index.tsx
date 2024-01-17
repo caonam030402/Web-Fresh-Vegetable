@@ -23,7 +23,7 @@ export default function RatingStars({ queryConfig }: Props) {
         .fill(0)
         .map((_, index) => {
           return (
-            <button onClick={() => handleFilterStar(5 - index)} className='flex gap-1'>
+            <button key={index} onClick={() => handleFilterStar(5 - index)} className='flex gap-1'>
               {Array(5)
                 .fill(0)
                 .map((_, indexStar) => {

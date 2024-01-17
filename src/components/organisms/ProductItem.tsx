@@ -1,16 +1,18 @@
 import { BiShoppingBag } from 'react-icons/bi'
 import { MdOutlineStar } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
+import { formatCurrency, formatNumberToSocialStyle, generateNameId } from 'src/utils/utils'
 import ProductRating from '../molecules/ProductRating'
+import { pathRoutes } from 'src/constants/path.routes'
 
 interface Props {
   product: Product
 }
 
 export default function ProductItem({ product }: Props) {
+  const url = `${pathRoutes.home}${generateNameId({ name: product.name, id: product._id })}`
   return (
-    <Link to='' className='relative'>
+    <Link to={url} className='relative'>
       <div className='absolute top-[4%] left-[5%] bg-secondary text-white z-10 px-3 leading-0 text-[9.5px] py-[2px] rounded-sm'>
         <span>Sale 50%</span>
       </div>

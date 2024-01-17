@@ -70,20 +70,33 @@ export default function Header() {
           <div className='flex gap-4 ml-14 justify-end'>
             <Popover
               renderPopover={
-                <div className='shadow-xl bg-slate-50 p-5 rounded-md'>
-                  <div className='font-medium text-sm text-greenDark'>{profile?.email}</div>
-                  <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
-                  <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                    <Link to='' className='hover:text-primary'>
-                      Tài khoản của tôi
-                    </Link>
-                    <Link to='' className='hover:text-primary'>
-                      Đơn mua
-                    </Link>
-                    <button onClick={handleLogout} className='hover:text-primary'>
-                      Đăng xuất
-                    </button>
-                  </div>
+                <div className='shadow-xl bg-slate-50 p-3 rounded-md'>
+                  {isAuthenticated ? (
+                    <div>
+                      <div className='font-medium text-sm text-greenDark'> {profile?.email}</div>
+                      <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
+                      <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
+                        <Link to='' className='hover:text-primary'>
+                          Tài khoản của tôi
+                        </Link>
+                        <Link to='' className='hover:text-primary'>
+                          Đơn mua
+                        </Link>
+                        <button onClick={handleLogout} className='hover:text-primary'>
+                          Đăng xuất
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
+                      <Link to={pathRoutes.login} className='hover:text-primary'>
+                        Đăng nhập
+                      </Link>
+                      <Link to={pathRoutes.register} className='hover:text-primary'>
+                        Đăng kí
+                      </Link>
+                    </div>
+                  )}
                 </div>
               }
             >

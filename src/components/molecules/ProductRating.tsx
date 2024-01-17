@@ -20,9 +20,9 @@ export default function ProductRating({ rating }: { rating: number }) {
               style={{ width: handleWithStar(index + 1) }}
               className={`absolute left-0 top-0 right-0 bottom-0 h-full overflow-hidden`}
             >
-              <BsStarFill className='mr-[2px] text-[10px] text-yellow-400' />
+              <BsStarFill className='mr-[2px] text-[12px] text-yellow-400' />
             </div>
-            <BsStarFill className='mr-[2px] text-[10px] text-gray-300' />
+            <BsStarFill className='mr-[2px] text-[12px] text-gray-300' />
           </div>
         ))}
     </div>

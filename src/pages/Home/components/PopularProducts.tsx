@@ -1,5 +1,8 @@
 import TitleSection from 'src/components/organisms/TitleSection'
 import ProductItem from 'src/components/organisms/ProductItem'
+import { useQuery } from 'react-query'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { productService } from 'src/services/product.service'
 
 const listProductData = [
   {
@@ -86,22 +89,29 @@ const listProductData = [
 ]
 
 export default function PopularProducts() {
+  const queryConfig = useQueryConfig()
+  const { data: productData } = useQuery({
+    queryKey: ['product-popular'],
+    queryFn: () => {
+      return productService.getProducts(queryConfig as ProductListConfig)
+    },
+    keepPreviousData: true,
+    staleTime: 3 * 60 * 1000
+  })
+
+  const products = productData?.data?.data?.products
+
+  const sortedProducts = products?.sort((a, b) => b.sold - a.sold)
+
+  const productPopular = sortedProducts?.slice(0, 10)
+
   return (
     <div>
       <TitleSection viewAll={true} title='Sản phẩm nổi bật' />
       <div className='grid-cols-2 grid gap-7 rounded-sm md:grid-cols-3 lg:grid-cols-5'>
-        {listProductData.map((item, index) => (
+        {productPopular?.map((item, index) => (
           <div key={index} className='col-span-1'>
-            {item !== undefined && (
-              <ProductItem
-                sold={item.sold}
-                image={item.image}
-                mass={item.mass}
-                name={item.name}
-                price={item.price}
-                price_before_discount={item.price_before_discount}
-              />
-            )}
+            {item !== undefined && <ProductItem product={item} />}
           </div>
         ))}
       </div>

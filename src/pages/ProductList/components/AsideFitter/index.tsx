@@ -5,6 +5,9 @@ import RatingStars from '../RatingStars'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { Link, createSearchParams } from 'react-router-dom'
 import { pathRoutes } from 'src/constants/path.routes'
+import { Schema, schema } from 'src/utils/rules'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 interface Props {
   queryConfig: QueryConfig
@@ -13,6 +16,7 @@ interface Props {
 
 export default function AsideFitter({ categories, queryConfig }: Props) {
   const { category } = queryConfig
+  const handleRemoveAllQuery = () => {}
   return (
     <div>
       <div>
@@ -36,7 +40,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
                 className={`flex items-center gap-1 }`}
               >
                 <input
-                  checked={isActive && true}
+                  checked={isActive ? true : false}
                   type='radio'
                   id={item._id}
                   className={`w-[18px] flex-shrink border-gray-100 accent-primary`}
@@ -76,7 +80,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
       </div>
       <div className='w-full h-[0.5px] bg-gray-300/50 my-5'></div>
       <Button className='w-full uppercase py-[8px] rounded-md' widthIcon={false}>
-        Xóa tất cả
+        <Link to={pathRoutes.productList}>Xóa tất cả</Link>
       </Button>
     </div>
   )
