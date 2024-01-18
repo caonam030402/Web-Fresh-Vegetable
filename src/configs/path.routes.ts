@@ -6,5 +6,7 @@ export const pathRoutes = {
   productList: '/product-list',
   productDetail: '/product-detail',
   account: '/account',
-  about: '/about'
+  about: '/about',
+  shop2: '/shop2',
+  page404: '/page404',
 }

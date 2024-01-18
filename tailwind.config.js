@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: (theme) => ({
-        contact_background: "url('./src/assets/images/im_bg_contact.png')"
+        contact_background: "url('./src/assets/images/im_bg_contact.png')",
+        discounted_background: "url('./src/assets/images/im_bannar.png')"
       }),
       colors: {
         primary: '#008641',
