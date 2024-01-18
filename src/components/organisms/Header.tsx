@@ -5,9 +5,9 @@ import { FaChevronDown } from 'react-icons/fa6'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import Tooltip from './Tooltip'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AppContext } from 'src/contexts/app.contexts'
-import { useMutation, useQuery } from 'react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import { authService } from 'src/services/auth.service'
 import { pathRoutes } from 'src/constants/path.routes'
 import Popover from './Popover'
@@ -15,19 +15,19 @@ import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency } from 'src/utils/utils'
-import useSearchProducts from 'src/hooks/useSearchProducts'
 
 export default function Header() {
-  const { register, onSubmitSearch } = useSearchProducts()
   const MAX_PURCHASES = 5
   const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const logoutMutation = useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
       setIsAuthenticated(false)
       navigate(pathRoutes.login)
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
       setProfile(null)
     }
   })
@@ -41,6 +41,10 @@ export default function Header() {
     queryFn: () => purchaseService.getPurchases({ status: purchasesStatus.inCart }),
     enabled: isAuthenticated
   })
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
 
   const listMenu = ['SẢN PHẨM', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
   return (
@@ -88,10 +92,10 @@ export default function Header() {
                       <div className='font-medium text-sm text-greenDark'> {profile?.email}</div>
                       <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
                       <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                        <Link to='' className='hover:text-primary'>
+                        <Link to={pathRoutes.profile} className='hover:text-primary'>
                           Tài khoản của tôi
                         </Link>
-                        <Link to='' className='hover:text-primary'>
+                        <Link to={pathRoutes.historyPurchase} className='hover:text-primary'>
                           Đơn mua
                         </Link>
                         <button onClick={handleLogout} className='hover:text-primary'>
@@ -123,34 +127,43 @@ export default function Header() {
             <Popover
               renderPopover={
                 <div className=' w-[25vw] bg-white shadow-lg rounded-md'>
-                  <h1 className='px-3 font-bold pt-3 mb-2 flex justify-between text-sm text-greenDark'>
-                    Sản phẩm mới thêm
-                  </h1>
-                  {purchasesInCartData?.data.data.slice(0, MAX_PURCHASES).map((item, index) => {
-                    return (
-                      <Link key={index} to='' className='flex p-3 ease duration-300 hover:bg-primary/10'>
-                        <div className='w-10 h-10 mr-3'>
-                          <img
-                            className='w-full h-full object-cover rounded-sm'
-                            src={item.product.image}
-                            alt={item.product.image}
-                          />
-                        </div>
-                        <div className='flex justify-between flex-1 gap-3'>
-                          <div className='line-clamp-3 text-xs'>{item.product.name}</div>
-                          <div className='text-xs text-greenDark'>{formatCurrency(item.price)}₫</div>
-                        </div>
-                      </Link>
-                    )
-                  })}
-                  <div className='px-3 pb-3 mt-1 flex justify-between items-center'>
-                    <h1 className='text-[10px]'>
-                      {Number(purchasesInCartData?.data.data.length) - MAX_PURCHASES} thêm vào giỏ hàng
-                    </h1>
-                    <Button size='medium' className='text-xs py-[9px]' widthIcon={false}>
-                      Xem Giỏ Hàng
-                    </Button>
-                  </div>
+                  {purchasesInCartData?.data.data.length !== 0 ? (
+                    <div>
+                      <h1 className='px-3 font-bold pt-3 mb-2 flex justify-between text-sm text-greenDark'>
+                        Sản phẩm mới thêm
+                      </h1>
+                      {purchasesInCartData?.data.data.slice(0, MAX_PURCHASES).map((item, index) => {
+                        return (
+                          <Link key={index} to='' className='flex p-3 ease duration-300 hover:bg-primary/10'>
+                            <div className='w-10 h-10 mr-3'>
+                              <img
+                                className='w-full h-full object-cover rounded-sm'
+                                src={item.product.image}
+                                alt={item.product.image}
+                              />
+                            </div>
+                            <div className='flex justify-between flex-1 gap-3'>
+                              <div className='line-clamp-3 text-xs'>{item.product.name}</div>
+                              <div className='text-xs text-greenDark'>{formatCurrency(item.price)}₫</div>
+                            </div>
+                          </Link>
+                        )
+                      })}
+                      <div className='px-3 pb-3 mt-1 flex justify-between items-center'>
+                        <h1 className='text-[10px]'>
+                          {Number(purchasesInCartData?.data.data.length) - MAX_PURCHASES} thêm vào giỏ hàng
+                        </h1>
+                        <Button size='medium' className='text-xs py-[9px]' widthIcon={false}>
+                          Xem Giỏ Hàng
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className='p-9 flex flex-col items-center'>
+                      <img className='w-[60%]' src={pathImage.noCard} alt='' />
+                      <p className='mt-4'>Chưa có sản phẩm nào</p>
+                    </div>
+                  )}
                 </div>
               }
             >
@@ -159,7 +172,7 @@ export default function Header() {
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
               >
                 <FiShoppingCart size={20} className='text-greenDark' />
-                {purchasesInCartData && (
+                {purchasesInCartData?.data.data.length != 0 && (
                   <div className='rounded-full p-[11px] top-[-10%] right-[-10%] absolute w-3 h-3 text-white text-xs bg-red-600 flex items-center justify-center'>
                     {purchasesInCartData?.data.data.length}
                   </div>

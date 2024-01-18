@@ -1,9 +1,20 @@
+import { useContext, useEffect } from 'react'
 import FloatingContact from './components/organisms/FloatingContact'
 import routeElements from './routes/routeElements'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { AppContext } from './contexts/app.contexts'
+import { localStorageEventTarget } from './utils/auth'
 
 function App() {
+  const { reset } = useContext(AppContext)
+  useEffect(() => {
+    localStorageEventTarget.addEventListener('clearLS', reset)
+    return () => {
+      localStorageEventTarget.removeEventListener('clearLS', reset)
+    }
+  }, [reset])
+
   const routes = routeElements()
   return (
     <div className=''>

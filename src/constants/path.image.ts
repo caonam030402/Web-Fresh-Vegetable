@@ -6,10 +6,12 @@ import LeafBlur from '../assets/images/leaf-blur.png'
 import GirlHoldingBag from '../assets/images/im_girl_holding_bag.png'
 import BasketFullOfVegetables from '../assets/images/im_basket_full_of_vegetables.png'
 import Breadcrumb from '../assets/images/im_breadcrumb.png'
+import NoCart from '../assets/images/im_nocart.png'
 
 export const pathImage = {
   leaf: Leaf,
   breadcrumb: Breadcrumb,
+  noCard: NoCart,
   leafBlur: LeafBlur,
   logo: Logo,
   girl_holding_bag: GirlHoldingBag,

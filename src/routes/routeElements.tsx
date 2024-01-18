@@ -11,6 +11,10 @@ import Login from 'src/pages/Login'
 import ProductDetail from 'src/pages/ProductDetail'
 import ProductList from 'src/pages/ProductList'
 import Register from 'src/pages/Register'
+import UserLayout from 'src/pages/User/layouts/UserLayout'
+import ChangePassword from 'src/pages/User/pages/ChangePassword'
+import HistoryPurchase from 'src/pages/User/pages/HistoryPurchase'
+import Profile from 'src/pages/User/pages/Profile'
 
 export default function routeElements() {
   const ProtectedRoute = () => {
@@ -67,6 +71,28 @@ export default function routeElements() {
           <Cart />
         </MainLayout>
       )
+    },
+    {
+      path: pathRoutes.user,
+      element: (
+        <MainLayout>
+          <UserLayout />
+        </MainLayout>
+      ),
+      children: [
+        {
+          path: pathRoutes.changPassword,
+          element: <ChangePassword />
+        },
+        {
+          path: pathRoutes.profile,
+          element: <Profile />
+        },
+        {
+          path: pathRoutes.historyPurchase,
+          element: <HistoryPurchase />
+        }
+      ]
     },
     {
       path: '',

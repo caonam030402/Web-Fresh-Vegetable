@@ -1,3 +1,6 @@
+import avatarDefault from 'src/assets/images/avatarDefault.png'
+import { config } from 'src/constants/config'
+
 export function formatCurrency(currency: number) {
   return new Intl.NumberFormat('de-DE').format(currency)
 }
@@ -28,3 +31,6 @@ export const getIdFromNameId = (nameId: string) => {
 export const rateSale = (original: number, sale: number) => {
   return (100 - (sale * 100) / original).toFixed(0) + '%'
 }
+
+export const getAvatarUrl = (avatarName?: string) =>
+  avatarName ? `${config.baseUrl}images/${avatarName}` : avatarDefault
