@@ -10,6 +10,8 @@ import { InputNumber } from 'src/components/atoms/InputNumber'
 import { productService } from 'src/services/product.service'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 import AsideFitter from './components/AsideFitter'
+import Pagination from 'src/components/organisms/Pagination'
+import SortProductList from './components/SortProductList'
 
 const listProductData = [
   {
@@ -118,12 +120,16 @@ export default function ProductList() {
       <div className='col-span-2'>
         <AsideFitter categories={categoriesData?.data.data} queryConfig={queryConfig} />
       </div>
-      <div className='col-span-8 grid-cols-2 grid gap-5 rounded-sm md:grid-cols-3 lg:grid-cols-4'>
-        {productData?.data.data.products.map((item, index) => (
-          <div key={index} className='col-span-1'>
-            {item !== undefined && <ProductItem product={item} />}
-          </div>
-        ))}
+      <div className='col-span-8 rounded-sm '>
+        <SortProductList queryConfig={queryConfig} pageSize={productData?.data.data.pagination.page_size as number} />
+        <div className='mt-4 grid-cols-2 grid md:grid-cols-3 lg:grid-cols-4 gap-5'>
+          {productData?.data.data.products.map((item, index) => (
+            <div key={index} className='col-span-1'>
+              {item !== undefined && <ProductItem product={item} />}
+            </div>
+          ))}
+        </div>
+        <Pagination queryConfig={queryConfig} pageSize={productData?.data.data.pagination.page_size as number} />
       </div>
     </div>
   )
