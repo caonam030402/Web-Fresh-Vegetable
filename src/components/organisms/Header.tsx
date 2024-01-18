@@ -15,8 +15,10 @@ import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency } from 'src/utils/utils'
+import useSearchProducts from 'src/hooks/useSearchProducts'
 
 export default function Header() {
+  const { register, onSubmitSearch } = useSearchProducts()
   const MAX_PURCHASES = 5
   const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
@@ -153,7 +155,7 @@ export default function Header() {
               }
             >
               <Link
-                to=''
+                to={pathRoutes.cart}
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
               >
                 <FiShoppingCart size={20} className='text-greenDark' />
