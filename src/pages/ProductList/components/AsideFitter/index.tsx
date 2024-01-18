@@ -62,7 +62,7 @@ export default function AsideFitter({ categories, queryConfig }: Props) {
           <span className='text-zinc-900 text-base font-medium capitalize'>Khoảng Giá</span>
           <MdKeyboardArrowUp className='text-lg' />
         </div>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 my-3'>
           <InputNumber placeholder='₫ TỪ'></InputNumber>
           <InputNumber placeholder='₫ ĐẾN'></InputNumber>
         </div>

@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import Breadcrumb from 'src/components/organisms/Breadcrumb'
 import { pathRoutes } from 'src/constants/path.routes'
 import { AppContext } from 'src/contexts/app.contexts'
 import MainLayout from 'src/layouts/MainLayout'
 import About from 'src/pages/About/Index'
+import Cart from 'src/pages/Cart'
 import Home from 'src/pages/Home/Index'
 import Login from 'src/pages/Login'
 import ProductDetail from 'src/pages/ProductDetail'
@@ -43,6 +45,7 @@ export default function routeElements() {
       path: pathRoutes.productDetail,
       element: (
         <MainLayout>
+          <Breadcrumb />
           <ProductDetail />
         </MainLayout>
       )
@@ -51,7 +54,17 @@ export default function routeElements() {
       path: pathRoutes.productList,
       element: (
         <MainLayout>
+          <Breadcrumb />
           <ProductList />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.cart,
+      element: (
+        <MainLayout>
+          <Breadcrumb />
+          <Cart />
         </MainLayout>
       )
     },

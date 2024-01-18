@@ -1,5 +1,4 @@
 import { BiShoppingBag } from 'react-icons/bi'
-import { MdOutlineStar } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { formatCurrency, formatNumberToSocialStyle, generateNameId } from 'src/utils/utils'
 import ProductRating from '../molecules/ProductRating'
