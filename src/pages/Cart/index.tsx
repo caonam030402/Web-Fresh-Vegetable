@@ -14,7 +14,7 @@ import { pathImage } from 'src/constants/path.image'
 import { pathRoutes } from 'src/constants/path.routes'
 
 export default function Cart() {
-  const { extendedPurchases, setExtendedPurchases } = useContext(AppContext)
+  const { extendedPurchases, setExtendedPurchases, setPurchasePayment } = useContext(AppContext)
   const navigate = useNavigate()
 
   const { data: purchasesInCartData, refetch } = useQuery({
@@ -44,7 +44,9 @@ export default function Cart() {
 
   const handleBuyPurchases = () => {
     if (checkedPurchases.length > 0) {
+      navigate(pathRoutes.payment)
       const body = checkedPurchases.map((purchase) => purchase)
+      setPurchasePayment(body)
     }
   }
 

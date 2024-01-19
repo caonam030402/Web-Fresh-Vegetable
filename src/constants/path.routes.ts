@@ -1,4 +1,6 @@
 export const pathRoutes = {
+  payment_return: '/payment/vnpay-return',
+  payment: '/payment',
   admin: '/admin',
   profile: '/user/profile',
   product_management: '/admin/product-management',

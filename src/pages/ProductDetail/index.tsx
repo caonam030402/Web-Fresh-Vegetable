@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { toast } from 'react-toastify'
 import Button from 'src/components/atoms/Button'
@@ -17,6 +17,7 @@ import { formatCurrency, formatNumberToSocialStyle, generateNameId, getIdFromNam
 export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
+  const navigate = useNavigate()
 
   const id = getIdFromNameId(nameId as string)
   const { data: productDetailData } = useQuery({
@@ -25,6 +26,16 @@ export default function ProductDetail() {
   })
 
   const productDetail = productDetailData?.data.data
+
+  const buyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: productDetail?._id as string })
+    const purchaseId = res.data.data._id
+    navigate(pathRoutes.cart, {
+      state: {
+        purchaseId: purchaseId
+      }
+    })
+  }
 
   const queryConfig: ProductListConfig = { limit: '20', page: '1', category: productDetail?.category._id }
 
@@ -106,7 +117,9 @@ export default function ProductDetail() {
                 <span>Thêm vào giỏ hàng</span>
               </div>
             </Button>
-            <Button widthIcon={false}>Mua Ngay</Button>
+            <Button onClick={buyNow} widthIcon={false}>
+              Mua Ngay
+            </Button>
           </div>
         </div>
       </div>

@@ -23,5 +23,8 @@ export const purchaseService = {
     return http.delete<SuccessResponse<{ delete_cound: number }>>(`${URL}`, {
       data: purchaseIds
     })
+  },
+  getPurchasesWithParam(status: PurchaseListStatus) {
+    return http.get<SuccessResponse<Purchase[]>>(`${URL}/${status}`)
   }
 }

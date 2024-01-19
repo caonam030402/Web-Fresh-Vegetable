@@ -12,6 +12,8 @@ import ProductManagement from 'src/pages/Admin/pages/ProductManagement'
 import Cart from 'src/pages/Cart'
 import Home from 'src/pages/Home/Index'
 import Login from 'src/pages/Login'
+import Payment from 'src/pages/Payment'
+import PaymentReturn from 'src/pages/Payment/components/PaymentReturn'
 import ProductDetail from 'src/pages/ProductDetail'
 import ProductList from 'src/pages/ProductList'
 import Register from 'src/pages/Register'
@@ -149,6 +151,22 @@ export default function routeElements() {
           element: <HandleProduct />
         }
       ]
+    },
+    {
+      path: pathRoutes.payment,
+      element: (
+        <MainLayout>
+          <Payment />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.payment_return,
+      element: (
+        <MainLayout>
+          <PaymentReturn />
+        </MainLayout>
+      )
     }
   ])
   return routeElements

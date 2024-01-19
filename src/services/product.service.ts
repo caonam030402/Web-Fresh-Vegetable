@@ -1,4 +1,5 @@
 import { http } from 'src/utils/http'
+import { ProductSchema } from 'src/utils/rules'
 
 const URL = 'products'
 
@@ -22,7 +23,6 @@ export const productService = {
       }
     })
   },
-
   upLoadImageProducts(body: FormData) {
     return http.post<SuccessResponse<string>>('product/upload-image', body, {
       headers: {
