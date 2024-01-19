@@ -4,7 +4,11 @@ import Breadcrumb from 'src/components/organisms/Breadcrumb'
 import { pathRoutes } from 'src/constants/path.routes'
 import { AppContext } from 'src/contexts/app.contexts'
 import MainLayout from 'src/layouts/MainLayout'
+import RoleLayout from 'src/layouts/RoleLayout'
 import About from 'src/pages/About/Index'
+import HandleProduct from 'src/pages/Admin/pages/HandleProduct'
+import CreateProduct from 'src/pages/Admin/pages/HandleProduct'
+import ProductManagement from 'src/pages/Admin/pages/ProductManagement'
 import Cart from 'src/pages/Cart'
 import Home from 'src/pages/Home/Index'
 import Login from 'src/pages/Login'
@@ -37,6 +41,67 @@ export default function routeElements() {
         </MainLayout>
       )
     },
+
+    {
+      path: '',
+      element: <RejectedRoute />,
+      children: [
+        {
+          path: pathRoutes.login,
+          element: (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )
+        },
+        {
+          path: pathRoutes.register,
+          element: (
+            <MainLayout>
+              <Register />
+            </MainLayout>
+          )
+        }
+      ]
+    },
+    {
+      path: '',
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: pathRoutes.cart,
+          element: (
+            <MainLayout>
+              <Breadcrumb />
+              <Cart />
+            </MainLayout>
+          )
+        },
+        {
+          path: pathRoutes.user,
+          element: (
+            <MainLayout>
+              <UserLayout />
+            </MainLayout>
+          ),
+          children: [
+            {
+              path: pathRoutes.changPassword,
+              element: <ChangePassword />
+            },
+            {
+              path: pathRoutes.profile,
+              element: <Profile />
+            },
+            {
+              path: pathRoutes.historyPurchase,
+              element: <HistoryPurchase />
+            }
+          ]
+        }
+      ]
+    },
+
     {
       path: pathRoutes.about,
       element: (
@@ -64,55 +129,24 @@ export default function routeElements() {
       )
     },
     {
-      path: pathRoutes.cart,
+      path: pathRoutes.admin,
       element: (
         <MainLayout>
-          <Breadcrumb />
-          <Cart />
-        </MainLayout>
-      )
-    },
-    {
-      path: pathRoutes.user,
-      element: (
-        <MainLayout>
-          <UserLayout />
+          <RoleLayout />
         </MainLayout>
       ),
       children: [
         {
-          path: pathRoutes.changPassword,
-          element: <ChangePassword />
+          path: pathRoutes.product_management,
+          element: <ProductManagement />
         },
         {
-          path: pathRoutes.profile,
-          element: <Profile />
+          path: pathRoutes.add_product,
+          element: <HandleProduct />
         },
         {
-          path: pathRoutes.historyPurchase,
-          element: <HistoryPurchase />
-        }
-      ]
-    },
-    {
-      path: '',
-      element: <RejectedRoute />,
-      children: [
-        {
-          path: pathRoutes.login,
-          element: (
-            <MainLayout>
-              <Login />
-            </MainLayout>
-          )
-        },
-        {
-          path: pathRoutes.register,
-          element: (
-            <MainLayout>
-              <Register />
-            </MainLayout>
-          )
+          path: pathRoutes.update_product,
+          element: <HandleProduct />
         }
       ]
     }

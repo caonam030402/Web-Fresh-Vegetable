@@ -22,8 +22,6 @@ export default function Cart() {
     queryFn: () => purchaseService.getPurchases({ status: purchasesStatus.inCart })
   })
 
-  const purchaseIncart = purchasesInCartData?.data.data
-
   const location = useLocation()
 
   const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
@@ -92,6 +90,7 @@ export default function Cart() {
       updatePurchaseMutation.mutate({ product_id: purchase.product._id, buy_count: value })
     }
   }
+  const purchaseIncart = purchasesInCartData?.data.data
 
   const quanlityController = (purchase: ExtendedPurchase, index: number) => {
     return (

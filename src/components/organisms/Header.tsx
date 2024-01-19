@@ -15,6 +15,7 @@ import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency } from 'src/utils/utils'
+import { clearLS } from 'src/utils/auth'
 
 export default function Header() {
   const MAX_PURCHASES = 5
@@ -127,7 +128,7 @@ export default function Header() {
             <Popover
               renderPopover={
                 <div className=' w-[25vw] bg-white shadow-lg rounded-md'>
-                  {purchasesInCartData?.data.data.length !== 0 ? (
+                  {Number(purchasesInCartData?.data.data.length) > 0 ? (
                     <div>
                       <h1 className='px-3 font-bold pt-3 mb-2 flex justify-between text-sm text-greenDark'>
                         Sản phẩm mới thêm
@@ -172,7 +173,7 @@ export default function Header() {
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
               >
                 <FiShoppingCart size={20} className='text-greenDark' />
-                {purchasesInCartData?.data.data.length != 0 && (
+                {(purchasesInCartData?.data.data.length as number) > 0 && (
                   <div className='rounded-full p-[11px] top-[-10%] right-[-10%] absolute w-3 h-3 text-white text-xs bg-red-600 flex items-center justify-center'>
                     {purchasesInCartData?.data.data.length}
                   </div>

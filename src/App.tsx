@@ -7,15 +7,16 @@ import { AppContext } from './contexts/app.contexts'
 import { localStorageEventTarget } from './utils/auth'
 
 function App() {
-  const { reset } = useContext(AppContext)
-  useEffect(() => {
-    localStorageEventTarget.addEventListener('clearLS', reset)
-    return () => {
-      localStorageEventTarget.removeEventListener('clearLS', reset)
-    }
-  }, [reset])
-
   const routes = routeElements()
+  // const { reset } = useContext(AppContext)
+  // console.log(reset)
+  // useEffect(() => {
+  //   localStorageEventTarget.addEventListener('clearLS', reset)
+  //   return () => {
+  //     localStorageEventTarget.removeEventListener('clearLS', reset)
+  //   }
+  // }, [reset])
+
   return (
     <div className=''>
       {routes}

@@ -15,10 +15,10 @@ const initialAppContext: AppContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLS()),
   setIsAuthenticated: () => null,
   profile: getProfileFromLS(),
-  reset: () => null,
   setProfile: () => null,
   extendedPurchases: [],
-  setExtendedPurchases: () => null
+  setExtendedPurchases: () => null,
+  reset: () => null
 }
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
@@ -27,9 +27,11 @@ export default function AppProvider({ children }: { children: React.ReactNode })
   const [isAuthenticated, setIsAuthenticated] = useState(initialAppContext.isAuthenticated)
   const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchase[]>([])
   const [profile, setProfile] = useState(initialAppContext.profile)
+
   const reset = () => {
     setIsAuthenticated(false), setExtendedPurchases([]), setProfile(null)
   }
+
   return (
     <AppContext.Provider
       value={{

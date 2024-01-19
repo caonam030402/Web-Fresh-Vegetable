@@ -61,7 +61,7 @@ export default function ChangePassword() {
   }
 
   return (
-    <div className='bg-white p-7 text-gray-700 shadow-sm'>
+    <div className=' text-gray-700'>
       <div className='mb-1 text-xl capitalize'>Đổi mật khẩu</div>
       <div>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</div>
       <div className='my-4 h-[1px] w-full bg-slate-100 md:my-8'></div>

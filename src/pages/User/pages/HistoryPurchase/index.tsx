@@ -55,9 +55,9 @@ export default function HistoryPurchase() {
         }).toString()
       }}
       className={classNames(
-        ' flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center capitalize',
+        ' flex flex-1 items-center justify-center border-b-2 bg-white pb-4 text-center capitalize',
         {
-          'border-b-primaryColor text-primaryColor': status === tab.status,
+          'border-b-primary text-primary': status === tab.status,
           'border-b-black/10 text-gray-900': status !== tab.status
         }
       )}
@@ -70,7 +70,7 @@ export default function HistoryPurchase() {
     return (
       <>
         <span className='mr-1 text-gray-300 line-through'>₫{formatCurrency(purchase.price_before_discount)}</span>
-        <span className='text-primaryColor'>₫{formatCurrency(purchase.price)}</span>
+        <span className='text-primary'>₫{formatCurrency(purchase.price)}</span>
       </>
     )
   }
@@ -129,12 +129,12 @@ export default function HistoryPurchase() {
                   <div className='flex flex-col items-end'>
                     <div className='flex items-center gap-2'>
                       <span className='text-xs capitalize md:text-sm'>Thành tiền:</span>
-                      <span className='text-lg text-primaryColor md:text-2xl'>
+                      <span className='text-lg text-primary md:text-2xl'>
                         ₫{formatCurrency(purchase.buy_count * purchase.price)}
                       </span>
                     </div>
                     <Button
-                      className='mt-4 flex w-[180px] items-center justify-center rounded-sm bg-primaryColor py-[10px] text-sm text-white'
+                      className='mt-4 flex w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm text-white'
                       onClick={() => buyNow(purchase.buy_count, purchase.product._id)}
                     >
                       Mua lại

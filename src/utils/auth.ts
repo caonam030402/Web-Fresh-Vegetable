@@ -1,5 +1,7 @@
 import { AxiosError, HttpStatusCode, isAxiosError } from 'axios'
 
+export const localStorageEventTarget = new EventTarget()
+
 export const setAccessTokenToLS = (accessToken: string) => {
   return localStorage.setItem('access-token', accessToken)
 }
@@ -23,8 +25,8 @@ export const getProfileFromLS = () => {
 }
 
 export const clearLS = () => {
-  localStorage.removeItem('refresh_token')
-  localStorage.removeItem('access_token')
+  localStorage.removeItem('access-token')
+  localStorage.removeItem('refresh-token')
   localStorage.removeItem('profile')
   const clearLSEevent = new Event('clearLS')
   localStorageEventTarget.dispatchEvent(clearLSEevent)
@@ -33,5 +35,3 @@ export const clearLS = () => {
 export function isAxiosUnprocessableEntityError<FormError>(error: unknown): error is AxiosError<FormError> {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.UnprocessableEntity
 }
-
-export const localStorageEventTarget = new EventTarget()

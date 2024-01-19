@@ -7,10 +7,11 @@ import { QueryConfig } from 'src/hooks/useQueryConfig'
 interface Props {
   queryConfig: QueryConfig
   pageSize: number
+  pathname?: string
 }
 
 const RANGE = 2
-export default function Pagination({ queryConfig, pageSize }: Props) {
+export default function Pagination({ queryConfig, pageSize, pathname = pathRoutes.productList }: Props) {
   const page = Number(queryConfig.page)
 
   const renderPagination = () => {
@@ -56,7 +57,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
         return (
           <Link
             to={{
-              pathname: pathRoutes.productList,
+              pathname: pathname,
               search: createSearchParams({ ...queryConfig, page: pageNumber.toString() }).toString()
             }}
             className={classNames('mx-3 flex items-center rounded-sm px-4 py-2 ', {
@@ -79,7 +80,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
       ) : (
         <Link
           to={{
-            pathname: pathRoutes.productList,
+            pathname: pathname,
             search: createSearchParams({ ...queryConfig, page: (page - 1).toString() }).toString()
           }}
           className=''
@@ -95,7 +96,7 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
       ) : (
         <Link
           to={{
-            pathname: pathRoutes.productList,
+            pathname: pathname,
             search: createSearchParams({ ...queryConfig, page: (page + 1).toString() }).toString()
           }}
           className=''
