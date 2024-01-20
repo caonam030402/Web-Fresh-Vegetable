@@ -1,4 +1,4 @@
-import { pathRoutes } from 'src/constants/path.routes';
+import { pathRoutes } from 'src/constants/path.routes'
 import { http } from 'src/utils/http'
 
 export const authService = {
@@ -10,5 +10,8 @@ export const authService = {
   },
   logout() {
     return http.post(pathRoutes.logout)
+  },
+  getPayment(_id: string) {
+    return http.get<SuccessResponse<{ isAdmin: boolean }>>(`/is-admin/${_id}`)
   }
 }

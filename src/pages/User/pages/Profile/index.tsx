@@ -135,7 +135,6 @@ export default function Profile() {
                       placeholder='Tên'
                       errorMessage={errors.name?.message}
                       type='text'
-                      classNameInput='w-full flex-shrink-0 rounded-sm border-[1px] border-slate-300 px-2 py-2 outline-none'
                     />
                   </div>
                 </td>
@@ -151,7 +150,6 @@ export default function Profile() {
                         <InputNumber
                           placeholder='Số Điện Thoại'
                           errorMessage={errors.phone?.message}
-                          classNameInput='w-full flex-shrink-0 rounded-sm border-[1px] border-slate-300 px-2 py-2 outline-none'
                           {...field}
                           onChange={field.onChange}
                         />
@@ -170,7 +168,6 @@ export default function Profile() {
                       placeholder='Địa Chỉ'
                       errorMessage={errors.address?.message}
                       type='text'
-                      classNameInput='w-full flex-shrink-0 rounded-sm border-[1px] border-slate-300 px-2 py-2 outline-none'
                     />
                   </div>
                 </td>

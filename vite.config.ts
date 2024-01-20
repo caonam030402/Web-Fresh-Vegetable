@@ -9,7 +9,9 @@ export default defineConfig({
   css: {
     devSourcemap: true
   },
-
+  server: {
+    port: 4000
+  },
   resolve: {
     alias: {
       src: path.resolve(__dirname, './src')

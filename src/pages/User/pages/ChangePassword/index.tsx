@@ -61,7 +61,7 @@ export default function ChangePassword() {
   }
 
   return (
-    <div className=' text-gray-700'>
+    <div className=' text-gray-700 shadow-sm'>
       <div className='mb-1 text-xl capitalize'>Đổi mật khẩu</div>
       <div>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</div>
       <div className='my-4 h-[1px] w-full bg-slate-100 md:my-8'></div>
@@ -93,8 +93,6 @@ export default function ChangePassword() {
                       name='new_password'
                       placeholder='Mật Khẩu Mới'
                       type='password'
-                      isEyePassword={true}
-                      classNameInput='placeholder:capitalize w-full flex-shrink-0 rounded-sm border-[1px] border-slate-300 px-2 py-2 outline-none'
                     />
                   </div>
                 </td>
@@ -109,8 +107,6 @@ export default function ChangePassword() {
                       name='confirm_password'
                       type='password'
                       placeholder='Xác Nhận Mật Khẩu'
-                      isEyePassword={true}
-                      classNameInput='placeholder:capitalize w-full flex-shrink-0 rounded-sm border-[1px] border-slate-300 px-2 py-2 outline-none'
                     />
                   </div>
                 </td>

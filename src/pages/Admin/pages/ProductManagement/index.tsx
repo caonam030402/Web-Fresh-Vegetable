@@ -252,7 +252,10 @@ export default function ProductManagement() {
             </button>
           </Popover>
         </div>
-        <Link to={pathRoutes.home} className='flex items-center rounded-md border bg-primary px-3 py-2 text-white'>
+        <Link
+          to={pathRoutes.add_product}
+          className='flex items-center rounded-md border bg-primary px-3 py-2 text-white'
+        >
           <RiAddFill className='mr-2 text-lg' />
           <div>Thêm sản phẩm</div>
         </Link>
@@ -297,7 +300,6 @@ export default function ProductManagement() {
               >
                 <TbDots className='text-xl' />
               </Popover>
-              {item._id}
               <PopUp
                 setIsOpenModal={setIsOpenModal}
                 isOpenModal={isOpenModal}

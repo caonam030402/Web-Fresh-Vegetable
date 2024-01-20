@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useQuery } from 'react-query'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import Breadcrumb from 'src/components/organisms/Breadcrumb'
 import { pathRoutes } from 'src/constants/path.routes'
@@ -21,8 +22,11 @@ import UserLayout from 'src/pages/User/layouts/UserLayout'
 import ChangePassword from 'src/pages/User/pages/ChangePassword'
 import HistoryPurchase from 'src/pages/User/pages/HistoryPurchase'
 import Profile from 'src/pages/User/pages/Profile'
+import { authService } from 'src/services/auth.service'
 
 export default function routeElements() {
+  const { isAuthenticated, profile } = useContext(AppContext)
+
   const ProtectedRoute = () => {
     const { isAuthenticated } = useContext(AppContext)
     return isAuthenticated ? <Outlet /> : <Navigate to={pathRoutes.login} />
@@ -30,7 +34,7 @@ export default function routeElements() {
 
   function RejectedRoute() {
     const { isAuthenticated } = useContext(AppContext)
-    return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
+    return !isAuthenticated ? <Outlet /> : <Navigate to={pathRoutes.home} />
   }
 
   const routeElements = useRoutes([
@@ -71,14 +75,22 @@ export default function routeElements() {
       element: <ProtectedRoute />,
       children: [
         {
-          path: pathRoutes.cart,
+          path: pathRoutes.payment,
           element: (
             <MainLayout>
-              <Breadcrumb />
-              <Cart />
+              <Payment />
             </MainLayout>
           )
         },
+        {
+          path: pathRoutes.payment_return,
+          element: (
+            <MainLayout>
+              <PaymentReturn />
+            </MainLayout>
+          )
+        },
+
         {
           path: pathRoutes.user,
           element: (
@@ -103,7 +115,14 @@ export default function routeElements() {
         }
       ]
     },
-
+    {
+      path: pathRoutes.cart,
+      element: (
+        <MainLayout>
+          <Cart />
+        </MainLayout>
+      )
+    },
     {
       path: pathRoutes.about,
       element: (
@@ -116,7 +135,6 @@ export default function routeElements() {
       path: pathRoutes.productDetail,
       element: (
         <MainLayout>
-          <Breadcrumb />
           <ProductDetail />
         </MainLayout>
       )
@@ -125,7 +143,6 @@ export default function routeElements() {
       path: pathRoutes.productList,
       element: (
         <MainLayout>
-          <Breadcrumb />
           <ProductList />
         </MainLayout>
       )
@@ -151,22 +168,6 @@ export default function routeElements() {
           element: <HandleProduct />
         }
       ]
-    },
-    {
-      path: pathRoutes.payment,
-      element: (
-        <MainLayout>
-          <Payment />
-        </MainLayout>
-      )
-    },
-    {
-      path: pathRoutes.payment_return,
-      element: (
-        <MainLayout>
-          <PaymentReturn />
-        </MainLayout>
-      )
     }
   ])
   return routeElements

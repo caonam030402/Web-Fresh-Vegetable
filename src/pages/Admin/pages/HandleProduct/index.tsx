@@ -141,7 +141,7 @@ export default function HandleProduct() {
             <h1 className='mb-2 text-[15px] font-bold'>Chọn danh mục</h1>
             <select
               {...register('category')}
-              className='focus:primaryColor h-[40px] w-full rounded-lg border border-gray-300 bg-white px-2 text-sm text-gray-500 outline-none '
+              className='focus:primary h-[40px] w-full rounded-lg border border-gray-300 bg-white px-2 text-sm text-gray-500 outline-none '
             >
               <option defaultValue='Chọn danh mục' className=''>
                 Chọn danh mục
@@ -218,7 +218,7 @@ export default function HandleProduct() {
         </div>
         <div>
           <h1 className='mb-2 text-[15px] font-bold'>
-            Thêm ảnh <span className='text-xs font-normal text-primaryColor'>{errorMessageImage}</span>
+            Thêm ảnh <span className='text-xs font-normal text-primary'>{errorMessageImage}</span>
           </h1>
           <div className='grid gap-4'>
             <div>
@@ -260,14 +260,14 @@ export default function HandleProduct() {
           <button
             onClick={handleCheckValidationUploadImage}
             type='submit'
-            className='col-span-6 rounded-sm bg-primaryColor px-3 py-2 text-white'
+            className='col-span-6 rounded-sm bg-primary px-3 py-2 text-white'
           >
             {productId ? 'Cập nhập ngay' : 'Thêm sản phẩm'}
           </button>
           <button
             type='button'
             onClick={handleResetForm}
-            className='col-span-6 rounded-sm border border-primaryColor px-3 py-2 text-primaryColor'
+            className='col-span-6 rounded-sm border border-primary px-3 py-2 text-primary'
           >
             Nhập lại thông tin
           </button>

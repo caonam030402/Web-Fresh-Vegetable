@@ -78,7 +78,6 @@ export default function Payment() {
   const buyPurchaseByVNP = useMutation({
     mutationFn: vnpPaymentService.postPayment,
     onSuccess: (data) => {
-      navigate(pathRoutes.add_product)
       window.location.href = data.data.data
     }
   })
@@ -376,7 +375,7 @@ export default function Payment() {
                   }`}
                   onClick={() => handlePayment('VNPAY')}
                 >
-                  thanh toán VNP
+                  Thanh toán VNP
                 </button>
               </div>
             </div>

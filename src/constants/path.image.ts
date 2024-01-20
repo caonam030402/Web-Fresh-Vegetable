@@ -7,8 +7,10 @@ import GirlHoldingBag from '../assets/images/im_girl_holding_bag.png'
 import BasketFullOfVegetables from '../assets/images/im_basket_full_of_vegetables.png'
 import Breadcrumb from '../assets/images/im_breadcrumb.png'
 import NoCart from '../assets/images/im_nocart.png'
+import DefaultAvatar from '../assets/images/avatarDefault.png'
 
 export const pathImage = {
+  defaultAvatar: DefaultAvatar,
   leaf: Leaf,
   breadcrumb: Breadcrumb,
   noCard: NoCart,

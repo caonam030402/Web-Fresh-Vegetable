@@ -22,40 +22,27 @@ export default function Cart() {
     queryFn: () => purchaseService.getPurchases({ status: purchasesStatus.inCart })
   })
 
-  const location = useLocation()
-
-  const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
-
-  const isAllChecked = useMemo(() => extendedPurchases.every((purchase) => purchase.checked), [extendedPurchases])
-  const checkedPurchases = useMemo(() => extendedPurchases.filter((purchase) => purchase.checked), [extendedPurchases])
-
-  const handleCheckAll = () => {
-    setExtendedPurchases((prev) =>
-      prev.map((purchase) => ({
-        ...purchase,
-        checked: !isAllChecked
-      }))
-    )
-  }
-  const hanleDeleteManyPurchases = () => {
-    const purchasesIds = checkedPurchases.map((purchase) => purchase._id)
-    deletePurchaseMutation.mutate(purchasesIds)
-  }
-
-  const handleBuyPurchases = () => {
-    if (checkedPurchases.length > 0) {
-      navigate(pathRoutes.payment)
-      const body = checkedPurchases.map((purchase) => purchase)
-      setPurchasePayment(body)
-    }
-  }
-
   const updatePurchaseMutation = useMutation({
     mutationFn: purchaseService.updatePurchase,
     onSuccess: () => {
       refetch()
     }
   })
+
+  const deletePurchaseMutation = useMutation({
+    mutationFn: purchaseService.deletePurchase,
+    onSuccess: () => {
+      refetch()
+    }
+  })
+
+  const purchasesInCart = purchasesInCartData?.data.data
+
+  const isAllChecked = useMemo(() => extendedPurchases.every((purchase) => purchase.checked), [extendedPurchases])
+
+  const checkedPurchases = useMemo(() => extendedPurchases.filter((purchase) => purchase.checked), [extendedPurchases])
+
+  const checkedPurchasesCount = checkedPurchases.length
 
   const totalCheckedPurchasePrice = useMemo(
     () =>
@@ -73,11 +60,39 @@ export default function Cart() {
     [checkedPurchases]
   )
 
-  const handleTypeQuantity = (purchaseIndex: number) => (value: number) => {
+  const location = useLocation()
+
+  const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
+  useEffect(() => {
+    setExtendedPurchases((prev) => {
+      const extendedPurchasesObject = keyBy(prev, '_id')
+      return (
+        purchasesInCart?.map((purchase) => {
+          const isChoosenPurchaseFromLocation = choosenPurchaseIdFromLocation === purchase._id
+          return {
+            ...purchase,
+            disabled: false,
+            checked: isChoosenPurchaseFromLocation || Boolean(extendedPurchasesObject[purchase._id]?.checked)
+          }
+        }) || []
+      )
+    })
+  }, [purchasesInCart, setExtendedPurchases, choosenPurchaseIdFromLocation])
+
+  const handleCheck = (purchaseIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setExtendedPurchases(
       produce((draft) => {
-        draft[purchaseIndex].buy_count = value
+        draft[purchaseIndex].checked = event.target.checked
       })
+    )
+  }
+
+  const handleCheckAll = () => {
+    setExtendedPurchases((prev) =>
+      prev.map((purchase) => ({
+        ...purchase,
+        checked: !isAllChecked
+      }))
     )
   }
 
@@ -92,7 +107,32 @@ export default function Cart() {
       updatePurchaseMutation.mutate({ product_id: purchase.product._id, buy_count: value })
     }
   }
-  const purchaseIncart = purchasesInCartData?.data.data
+
+  const handleTypeQuantity = (purchaseIndex: number) => (value: number) => {
+    setExtendedPurchases(
+      produce((draft) => {
+        draft[purchaseIndex].buy_count = value
+      })
+    )
+  }
+
+  const handleDelete = (purchaseIndex: number) => () => {
+    const purchaseId = extendedPurchases[purchaseIndex]._id
+    deletePurchaseMutation.mutate([purchaseId])
+  }
+
+  const hanleDeleteManyPurchases = () => {
+    const purchasesIds = checkedPurchases.map((purchase) => purchase._id)
+    deletePurchaseMutation.mutate(purchasesIds)
+  }
+
+  const handleBuyPurchases = () => {
+    if (checkedPurchases.length > 0) {
+      navigate(pathRoutes.payment)
+      const body = checkedPurchases.map((purchase) => purchase)
+      setPurchasePayment(body)
+    }
+  }
 
   const quanlityController = (purchase: ExtendedPurchase, index: number) => {
     return (
@@ -108,48 +148,10 @@ export default function Cart() {
             value,
             value >= 1 &&
               value <= purchase.product.quantity &&
-              value !== (purchaseIncart as Purchase[])[index].buy_count
+              value !== (purchasesInCart as Purchase[])[index].buy_count
           )
         }
       />
-    )
-  }
-
-  useEffect(() => {
-    setExtendedPurchases((prev) => {
-      const extendedPurchasesObject = keyBy(prev, '_id')
-
-      return (
-        purchaseIncart?.map((purchase) => {
-          const isChoosenPurchaseFromLocation = choosenPurchaseIdFromLocation === purchase._id
-
-          return {
-            ...purchase,
-            disabled: false,
-            checked: isChoosenPurchaseFromLocation || Boolean(extendedPurchasesObject[purchase._id]?.checked)
-          }
-        }) || []
-      )
-    })
-  }, [purchaseIncart, setExtendedPurchases, choosenPurchaseIdFromLocation])
-
-  const deletePurchaseMutation = useMutation({
-    mutationFn: purchaseService.deletePurchase,
-    onSuccess: () => {
-      refetch()
-    }
-  })
-
-  const handleDelete = (purchaseIndex: number) => () => {
-    const purchaseId = extendedPurchases[purchaseIndex]._id
-    deletePurchaseMutation.mutate([purchaseId])
-  }
-
-  const handleCheck = (purchaseIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setExtendedPurchases(
-      produce((draft) => {
-        draft[purchaseIndex].checked = event.target.checked
-      })
     )
   }
 
@@ -157,17 +159,17 @@ export default function Cart() {
     <div className='container py-10'>
       {/* <h1 className='capitalize text-3xl font-bold text-center mb-5'>Giỏ hàng của tôi</h1> */}
 
-      {purchaseIncart && purchaseIncart?.length > 0 ? (
+      {purchasesInCart && purchasesInCart?.length > 0 ? (
         <div className='grid grid-cols-12'>
           <div className='col-span-12 rounded-md border bg-white'>
             <div className='grid grid-cols-12 gap-12 py-5 px-6 border-b uppercase w-full text-zinc-500 text-sm font-medium'>
               <div className='col-span-5 flex items-center gap-4'>
                 <input
                   onChange={handleCheckAll}
-                  checked={purchaseIncart?.length === 0 ? false : isAllChecked}
+                  checked={purchasesInCart?.length === 0 ? false : isAllChecked}
                   type='checkbox'
                   className={`flex-shrink border-gray-100 accent-primary`}
-                  disabled={purchaseIncart?.length === 0 && true}
+                  disabled={purchasesInCart?.length === 0 && true}
                 />
                 <span>Sản phẩm</span>
               </div>
@@ -214,11 +216,11 @@ export default function Cart() {
             <div className='py-5 px-6 flex justify-between'>
               <div className='flex gap-4 items-center'>
                 <input
-                  checked={purchaseIncart?.length === 0 ? false : isAllChecked}
+                  checked={purchasesInCart?.length === 0 ? false : isAllChecked}
                   type='checkbox'
                   onChange={handleCheckAll}
                   className={`flex-shrink border-gray-100 accent-primary`}
-                  disabled={purchaseIncart?.length === 0 && true}
+                  disabled={purchasesInCart?.length === 0 && true}
                 />
                 <p>Chọn Tất Cả</p>
                 <p>Xóa</p>

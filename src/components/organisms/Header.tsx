@@ -4,7 +4,6 @@ import AppSearchBar from '../molecules/AppSearchBar'
 import { FaChevronDown } from 'react-icons/fa6'
 import { Link, useNavigate } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
-import Tooltip from './Tooltip'
 import { useContext, useEffect } from 'react'
 import { AppContext } from 'src/contexts/app.contexts'
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
@@ -14,7 +13,7 @@ import Popover from './Popover'
 import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
-import { formatCurrency } from 'src/utils/utils'
+import { formatCurrency, getAvatarUrl } from 'src/utils/utils'
 import { clearLS } from 'src/utils/auth'
 
 export default function Header() {
@@ -47,7 +46,14 @@ export default function Header() {
     refetch()
   }, [refetch])
 
-  const listMenu = ['SẢN PHẨM', 'KHUYẾN MÃI', 'GÓI THÀNH VIÊN', 'GÓC CHIA SẺ', 'VỀ CHÚNG TÔI ']
+  const menuItems = [
+    { name: 'SẢN PHẨM', path: pathRoutes.productList },
+    { name: 'KHUYẾN MÃI', path: '/khuyen-mai' },
+    { name: 'GÓC CHIA SẺ', path: '/goc-chia-se' },
+    { name: 'GÓI THÀNH VIÊN', path: '/goc-chia-se' },
+    { name: 'VỀ CHÚNG TÔI', path: '/ve-chung-toi' }
+  ]
+
   return (
     <div className='bg-white '>
       <div className='bg-primary text-white text-xs py-2'>
@@ -67,7 +73,7 @@ export default function Header() {
           <Link className='md:hidden absolute w-[100px] right-1/2 translate-x-[50%] md:mr-10 mr-0 ' to=''>
             <img src={pathImage.logo} alt='' className='' />
           </Link>
-          <Link className='md:block hidden md:mr-10 mr-0 ' to={pathRoutes.productList}>
+          <Link className='md:block hidden md:mr-10 mr-0 ' to={pathRoutes.home}>
             <img src={pathImage.logo} alt='' className='w-full' />
           </Link>
           <div className='flex-1'>
@@ -75,9 +81,9 @@ export default function Header() {
               <AppSearchBar />
             </div>
             <div className='lg:flex hidden items-center gap-x-10 gap-y-3 mt-4 flex-wrap'>
-              {listMenu.map((item, index) => (
-                <Link key={index} to='' className='text-greenDark flex items-center gap-1 font-bold text-sm'>
-                  {item}
+              {menuItems.map((item, index) => (
+                <Link key={index} to={item.path} className='text-greenDark flex items-center gap-1 font-bold text-sm'>
+                  {item.name}
                   <FaChevronDown size={13} />
                 </Link>
               ))}
@@ -120,9 +126,13 @@ export default function Header() {
               <Link
                 type='button'
                 to=''
-                className='hover:bg-opacity-30 duration-300 transition-all w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
+                className='hover:bg-opacity-30 overflow-hidden duration-300 transition-all w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
               >
-                <FiUser size={20} className='text-greenDark' />
+                {isAuthenticated ? (
+                  <img className='object-cover w-10 h-10' src={getAvatarUrl(profile?.avatar)} alt='' />
+                ) : (
+                  <FiUser size={20} className='text-greenDark' />
+                )}
               </Link>
             </Popover>
             <Popover
@@ -152,11 +162,16 @@ export default function Header() {
                       })}
                       <div className='px-3 pb-3 mt-1 flex justify-between items-center'>
                         <h1 className='text-[10px]'>
-                          {Number(purchasesInCartData?.data.data.length) - MAX_PURCHASES} thêm vào giỏ hàng
+                          {Number(purchasesInCartData?.data.data.length) <= MAX_PURCHASES
+                            ? 0
+                            : Number(purchasesInCartData?.data.data.length) - MAX_PURCHASES}{' '}
+                          thêm vào giỏ hàng
                         </h1>
-                        <Button size='medium' className='text-xs py-[9px]' widthIcon={false}>
-                          Xem Giỏ Hàng
-                        </Button>
+                        <Link to={pathRoutes.cart}>
+                          <Button size='medium' className='text-xs py-[9px]' widthIcon={false}>
+                            Xem Giỏ Hàng
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   ) : (

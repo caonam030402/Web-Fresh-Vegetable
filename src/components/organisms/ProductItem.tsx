@@ -1,6 +1,6 @@
 import { BiShoppingBag } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import { formatCurrency, formatNumberToSocialStyle, generateNameId } from 'src/utils/utils'
+import { formatCurrency, formatNumberToSocialStyle, generateNameId, rateSale } from 'src/utils/utils'
 import ProductRating from '../molecules/ProductRating'
 import { pathRoutes } from 'src/constants/path.routes'
 
@@ -13,7 +13,7 @@ export default function ProductItem({ product }: Props) {
   return (
     <Link to={url} className='relative'>
       <div className='absolute top-[4%] left-[5%] bg-secondary text-white z-10 px-3 leading-0 text-[9.5px] py-[2px] rounded-sm'>
-        <span>Sale 50%</span>
+        <span>{rateSale(product.price_before_discount, product.price)}</span>
       </div>
       <div className='relative z-0 w-full pt-[100%] group overflow-hidden rounded-t-md'>
         <img
@@ -36,9 +36,9 @@ export default function ProductItem({ product }: Props) {
               </span>
             </div>
           </div>
-          <div className='w-[37px] hover:bg-primary flex-shrink-0 hover:text-white ease-in-out duration-300 text-greenDark rounded-full bg- h-[37px] bg-greenDark bg-opacity-20 flex items-center justify-center'>
+          {/* <div className='w-[37px] hover:bg-primary flex-shrink-0 hover:text-white ease-in-out duration-300 text-greenDark rounded-full bg- h-[37px] bg-greenDark bg-opacity-20 flex items-center justify-center'>
             <BiShoppingBag size={21} />
-          </div>
+          </div> */}
         </div>
         <div className='flex items-center justify-between mt-3'>
           <ProductRating rating={product.rating} />

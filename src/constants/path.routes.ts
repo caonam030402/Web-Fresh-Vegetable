@@ -1,13 +1,9 @@
 export const pathRoutes = {
   payment_return: '/payment/vnpay-return',
   payment: '/payment',
-  admin: '/admin',
   profile: '/user/profile',
-  product_management: '/admin/product-management',
-  add_product: '/admin/product-management/add',
-  update_product: '/admin/product/manage/:productId',
-  home: '/',
   user: '/user',
+  home: '/',
   changPassword: '/user/password',
   historyPurchase: '/user/purchase',
   login: '/login',
@@ -17,5 +13,10 @@ export const pathRoutes = {
   productList: '/product-list',
   productDetail: ':nameId',
   account: '/account',
-  about: '/about'
+  about: '/about',
+
+  admin: '/admin',
+  product_management: '/admin/product-management',
+  add_product: '/admin/product-management/add',
+  update_product: '/admin/product/manage/:productId'
 }

@@ -5,17 +5,21 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AppContext } from './contexts/app.contexts'
 import { localStorageEventTarget } from './utils/auth'
+import { useQuery } from 'react-query'
+import { authService } from './services/auth.service'
 
 function App() {
   const routes = routeElements()
-  // const { reset } = useContext(AppContext)
-  // console.log(reset)
-  // useEffect(() => {
-  //   localStorageEventTarget.addEventListener('clearLS', reset)
-  //   return () => {
-  //     localStorageEventTarget.removeEventListener('clearLS', reset)
+  // const { profile } = useContext(AppContext)
+  // const { data } = useQuery({
+  //   queryKey: ['isAdmin1'],
+  //   queryFn: () => {
+  //     return authService.getPayment(profile?._id || '')
   //   }
-  // }, [reset])
+  // })
+
+  // const isAdmin = data?.data.data.isAdmin
+  // console.log(isAdmin)
 
   return (
     <div className=''>
