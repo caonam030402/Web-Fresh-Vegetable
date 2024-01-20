@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import cart from 'src/assets/image/no-cart.png'
 import { pathRoutes } from 'src/constants/path.routes'
 import { vnpPaymentService } from 'src/services/vnpPayment.service'
 import { useLocation } from 'react-router-dom'
@@ -17,7 +16,6 @@ export default function PaymentReturn() {
   return (
     <div>
       <div className='flex flex-col py-20 items-center justify-center'>
-        <img className='mx-auto w-36 md:w-80' src={cart} alt='' />
         <IoIosCheckmarkCircleOutline className='text-[200px] text-primary' />
         <h1 className='text-2xl capitalize text-primary'>{data?.data.message}</h1>
         <Link
