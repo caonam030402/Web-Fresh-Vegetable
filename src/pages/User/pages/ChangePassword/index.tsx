@@ -115,6 +115,7 @@ export default function ChangePassword() {
                 <td className='hidden md:block'></td>
                 <td className='p-0'>
                   <Button
+                    widthIcon={false}
                     disabled={updateProfileMutation.isLoading || checkInputEmpty()}
                     type='submit'
                     className='rounded-sm bg-primaryColor px-5 py-2 text-white'

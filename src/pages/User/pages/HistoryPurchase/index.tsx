@@ -12,15 +12,15 @@ import Button from 'src/components/atoms/Button'
 import { toast } from 'react-toastify'
 
 export default function HistoryPurchase() {
-  const updatePurchaseMutation = useMutation({
-    mutationFn: purchaseService.updatePurchase
-  })
+  const location = useLocation()
 
-  const hanleCancelledOrder = (purchase_id: string) => {
-    updatePurchaseMutation.mutate(
-      { status: purchasesStatus.cancelled, purchase_id: purchase_id },
+  const orderCancelMutation = useMutation({ mutationFn: purchaseService.updatePurchase })
+
+  const handleCancelOrder = ({ buy_count, purchase_id }: { buy_count: number; purchase_id: string }) => {
+    orderCancelMutation.mutate(
+      { status: purchasesStatus.cancelled, buy_count: buy_count, purchase_id: purchase_id },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast.success('Hủy đơn thành công')
           refetch()
         }
@@ -28,7 +28,6 @@ export default function HistoryPurchase() {
     )
   }
 
-  const location = useLocation()
   const purchaseTabs = [
     { status: purchasesStatus.all, name: 'Tất cả đơn mua' },
     { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
@@ -73,10 +72,10 @@ export default function HistoryPurchase() {
         }).toString()
       }}
       className={classNames(
-        ' flex flex-1 items-center font-semibold justify-center border-b-2 bg-white pb-4 text-center capitalize',
+        ' flex flex-1 items-center justify-center border-b-2 bg-white pb-4 text-center capitalize',
         {
           'border-b-primary text-primary': status === tab.status,
-          'border-b-black/10 text-gray-600': status !== tab.status
+          'border-b-black/10 text-gray-900': status !== tab.status
         }
       )}
     >
@@ -108,7 +107,7 @@ export default function HistoryPurchase() {
               <div className='flex flex-col'>
                 <div className='items-center justify-between md:flex'>
                   <Link
-                    to={`${pathRoutes.home}${generateNameId({
+                    to={`${pathRoutes.productList}${generateNameId({
                       name: purchase.product.name,
                       id: purchase.product._id
                     })}`}
@@ -147,25 +146,27 @@ export default function HistoryPurchase() {
                   <div className='flex flex-col items-end'>
                     <div className='flex items-center gap-2'>
                       <span className='text-xs capitalize md:text-sm'>Thành tiền:</span>
-                      <span className='text-lg text-primary md:text-2xl font-semibold'>
+                      <span className='text-lg font-bold text-primary md:text-2xl'>
                         ₫{formatCurrency(purchase.buy_count * purchase.price)}
                       </span>
                     </div>
-                    <div className='flex gap-3'>
+                    <div className='flex gap-4'>
                       <Button
                         widthIcon={false}
-                        className='mt-4 flex w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm uppercase font-semibold text-white'
+                        className='mt-4 flex uppercase font-semibold w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm text-white'
                         onClick={() => buyNow(purchase.buy_count, purchase.product._id)}
                       >
                         Mua lại
                       </Button>
-                      {location.search === `?status=${purchasesStatus.waitForConfirmation}` && (
+                      {location.search === '?status=1' && (
                         <Button
                           widthIcon={false}
-                          className='mt-4 bg-white border-[2px] border-primary text-primary flex w-[180px] items-center justify-center rounded-sm py-[10px] text-sm uppercase font-semibold '
-                          onClick={() => hanleCancelledOrder(purchase._id)}
+                          className='mt-4 bg-transparent uppercase font-semibold border-[2px] border-primary flex w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm text-white'
+                          onClick={() =>
+                            handleCancelOrder({ buy_count: purchase.buy_count, purchase_id: purchase._id })
+                          }
                         >
-                          <div className='text-primary'>Hủy đơn hàng</div>
+                          <div className='text-primary'>Hủy đơn</div>
                         </Button>
                       )}
                     </div>

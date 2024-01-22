@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { FaRegUser } from 'react-icons/fa'
 import { MdPassword } from 'react-icons/md'
-import { RiBillLine } from 'react-icons/ri'
+import { RiBillLine, RiNotificationLine } from 'react-icons/ri'
 import { Outlet } from 'react-router-dom'
 import SideNav from 'src/components/organisms/SideNav'
 import { pathRoutes } from 'src/constants/path.routes'
@@ -36,9 +36,9 @@ const listNavAdmin = [
     icon: <MdPassword className='' />
   },
   {
-    name: 'Đơn hàng',
-    path: pathRoutes.historyPurchase,
-    icon: <RiBillLine className='' />
+    name: 'Thông báo',
+    path: pathRoutes.notification,
+    icon: <RiNotificationLine />
   }
 ]
 

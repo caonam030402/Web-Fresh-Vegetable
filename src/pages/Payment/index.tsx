@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { setProfileToLS } from 'src/utils/auth'
 import { GrAdd } from 'react-icons/gr'
 import { AppContext } from 'src/contexts/app.contexts'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { userService } from 'src/services/user.service'
 import { useForm } from 'react-hook-form'
 import { purchaseService } from 'src/services/purchase.service'
@@ -17,11 +17,14 @@ import Modal from 'src/components/organisms/Model'
 import Input from 'src/components/atoms/Input'
 import { formatCurrency } from 'src/utils/utils'
 import Button from 'src/components/atoms/Button'
+import { purchasesStatus } from 'src/constants/purchase'
 
 type FormData = Pick<UserSchema, 'name' | 'address' | 'phone'>
 const profileSchema = userSchema.pick(['name', 'address', 'phone'])
 
 export default function Payment() {
+  const queryClient = useQueryClient()
+
   const [isModal, setIsModal] = useState({
     isOpenMyAddress: false,
     isOpenUpdateAddress: false,
@@ -71,6 +74,7 @@ export default function Payment() {
   const buyPurchaseMutation = useMutation({
     mutationFn: purchaseService.buyProducts,
     onSuccess: (data) => {
+      queryClient.resetQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
       toast.success(data.data.message, { autoClose: 1000 })
     }
   })

@@ -14,12 +14,19 @@ import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency, getAvatarUrl } from 'src/utils/utils'
+import { IoIosHelpCircleOutline, IoIosNotificationsOutline, IoMdLogIn } from 'react-icons/io'
+import { TbTruckDelivery } from 'react-icons/tb'
 
 export default function Header() {
   const MAX_PURCHASES = 5
   const { setIsAuthenticated, setProfile, profile, isAuthenticated, isAdmin } = useContext(AppContext)
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+
+  const { data: purchasesWaitForConfirmation } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.waitForConfirmation }],
+    queryFn: () => purchaseService.getPurchasesWithParam(purchasesStatus.waitForConfirmation)
+  })
 
   const logoutMutation = useMutation({
     mutationFn: authService.logout,
@@ -35,6 +42,14 @@ export default function Header() {
     logoutMutation.mutate()
   }
 
+  const menuItems = [
+    { name: 'SẢN PHẨM', path: pathRoutes.productList },
+    { name: 'KHUYẾN MÃI', path: '/khuyen-mai' },
+    { name: 'GÓC CHIA SẺ', path: '/goc-chia-se' },
+    { name: 'GÓI THÀNH VIÊN', path: '/goc-chia-se' },
+    { name: 'VỀ CHÚNG TÔI', path: '/ve-chung-toi' }
+  ]
+
   const { data: purchasesInCartData, refetch } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
     queryFn: () => purchaseService.getPurchases({ status: purchasesStatus.inCart }),
@@ -45,22 +60,120 @@ export default function Header() {
     refetch()
   }, [refetch])
 
-  const menuItems = [
-    { name: 'SẢN PHẨM', path: pathRoutes.productList },
-    { name: 'KHUYẾN MÃI', path: '/khuyen-mai' },
-    { name: 'GÓC CHIA SẺ', path: '/goc-chia-se' },
-    { name: 'GÓI THÀNH VIÊN', path: '/goc-chia-se' },
-    { name: 'VỀ CHÚNG TÔI', path: '/ve-chung-toi' }
-  ]
-
   return (
     <div className='bg-white '>
       <div className='bg-primary text-white text-xs py-2'>
         <div className='container flex items-center justify-center md:justify-between'>
-          <div>Free ship cho đơn hàng từ 350k. Giao hàng siêu tốc trong 2h.</div>
+          <div className='flex items-center gap-2'>
+            <TbTruckDelivery className='text-xl' />
+            <div>Free ship cho đơn hàng từ 350k. Giao hàng siêu tốc trong 2h.</div>
+          </div>
           <div className='hidden md:flex items-center gap-10'>
-            <div>Email: cskh@bio-ngon.com</div>
-            <div>Hotline: 0786416477</div>
+            <div className='flex items-center gap-1'>
+              <IoIosHelpCircleOutline className='text-xl' />
+              <span>Hỗ Trợ</span>
+            </div>
+            <Popover
+              renderPopover={
+                <div className=' w-[400px] overflow-auto rounded-md bg-white shadow-md scrollbar scrollbar-thumb-slate-200 scrollbar-thumb-rounded scrollbar-w-2'>
+                  <div className='mb-3 flex justify-between px-5 pt-5'>
+                    <h1 className='text-base font-bold'>Thông Báo</h1>
+                    <h1 className='cursor-pointer text-[13px]'>Xem tất cả</h1>
+                  </div>
+                  {isAdmin && (
+                    <div className=''>
+                      {purchasesWaitForConfirmation?.data.data?.map((purchase, index) => (
+                        <button key={index} className='flex w-full items-center px-5 py-3 last:pb-5 hover:bg-slate-50'>
+                          <img
+                            className='mr-3 h-[50px] w-[50px] rounded-md border'
+                            src={purchase.product.image}
+                            alt=''
+                          />
+                          <div className='text-left'>
+                            <h1 className='text-sm line-clamp-1'>{purchase.product.name}</h1>
+                            <p className='mt-1 text-xs'>
+                              Khách hàng đặt lúc{' '}
+                              <span className='font-bold'>{new Date(purchase.createdAt).toLocaleString('vi-VN')}</span>
+                            </p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              }
+            >
+              <div className='cursor-pointer flex items-center gap-1'>
+                <IoIosNotificationsOutline className='text-xl' />
+                <span>Thông Báo</span>
+              </div>
+            </Popover>
+
+            {isAuthenticated && (
+              <Popover
+                renderPopover={
+                  <div className='shadow-xl bg-slate-50 p-3 rounded-md'>
+                    {isAuthenticated ? (
+                      <div>
+                        {!isAdmin ? (
+                          <div className='flex flex-col gap-2 mt-2 items-start'>
+                            <Link to={pathRoutes.profile} className='hover:text-primary'>
+                              Tài khoản của tôi
+                            </Link>
+                            <Link to={pathRoutes.historyPurchase} className='hover:text-primary'>
+                              Đơn mua
+                            </Link>
+                            <button onClick={handleLogout} className='hover:text-primary'>
+                              Đăng xuất
+                            </button>
+                          </div>
+                        ) : (
+                          <div className='flex flex-col gap-2 mt-2 items-start'>
+                            <Link to={pathRoutes.product_management} className='hover:text-primary'>
+                              Quản lý sản phẩm
+                            </Link>
+                            <Link to={pathRoutes.order_management} className='hover:text-primary'>
+                              Quản lý đơn hàng
+                            </Link>
+                            <button onClick={handleLogout} className='hover:text-primary'>
+                              Đăng xuất
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
+                        <Link to={pathRoutes.login} className='hover:text-primary'>
+                          Đăng nhập
+                        </Link>
+                        <Link to={pathRoutes.register} className='hover:text-primary'>
+                          Đăng kí
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                }
+              >
+                <Link
+                  type='button'
+                  to=''
+                  className='hover:bg-opacity-30 duration-300 transition-all gap-3 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
+                >
+                  <img className='object-cover w-6 h-6' src={getAvatarUrl(profile?.avatar)} alt='' />
+                  <div className=''>
+                    {profile?.email}{' '}
+                    {isAdmin && (
+                      <span className='bg-white text-primary px-2 rounded-sm ml-1 uppercase font-semibold'>admin</span>
+                    )}
+                  </div>
+                </Link>
+              </Popover>
+            )}
+            {!isAuthenticated && (
+              <Link to={pathRoutes.login} className='flex items-center gap-1'>
+                <IoMdLogIn className='text-lg' /> <span>Đăng nhập</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -81,73 +194,19 @@ export default function Header() {
             </div>
             <div className='lg:flex hidden items-center gap-x-10 gap-y-3 mt-4 flex-wrap'>
               {menuItems.map((item, index) => (
-                <Link key={index} to={item.path} className='text-greenDark flex items-center gap-1 font-bold text-sm'>
+                <Link
+                  key={index}
+                  to={item.path}
+                  className='text-greenDark capitalize flex items-center gap-1 font-bold text-xs'
+                >
                   {item.name}
-                  <FaChevronDown size={13} />
+                  <FaChevronDown size={8} />
                 </Link>
               ))}
             </div>
           </div>
 
           <div className='flex gap-4 ml-14 justify-end'>
-            <Popover
-              renderPopover={
-                <div className='shadow-xl bg-slate-50 p-3 rounded-md'>
-                  {isAuthenticated ? (
-                    <div>
-                      <div className='font-medium text-sm text-greenDark'> {profile?.email}</div>
-                      <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
-                      {!isAdmin ? (
-                        <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                          <Link to={pathRoutes.profile} className='hover:text-primary'>
-                            Tài khoản của tôi
-                          </Link>
-                          <Link to={pathRoutes.historyPurchase} className='hover:text-primary'>
-                            Đơn mua
-                          </Link>
-                          <button onClick={handleLogout} className='hover:text-primary'>
-                            Đăng xuất
-                          </button>
-                        </div>
-                      ) : (
-                        <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                          <Link to={pathRoutes.product_management} className='hover:text-primary'>
-                            Quản lý sản phẩm
-                          </Link>
-                          <Link to={pathRoutes.order_management} className='hover:text-primary'>
-                            Quản lý đơn hàng
-                          </Link>
-                          <button onClick={handleLogout} className='hover:text-primary'>
-                            Đăng xuất
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                      <Link to={pathRoutes.login} className='hover:text-primary'>
-                        Đăng nhập
-                      </Link>
-                      <Link to={pathRoutes.register} className='hover:text-primary'>
-                        Đăng kí
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              }
-            >
-              <Link
-                type='button'
-                to=''
-                className='hover:bg-opacity-30 overflow-hidden duration-300 transition-all w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
-              >
-                {isAuthenticated ? (
-                  <img className='object-cover w-10 h-10' src={getAvatarUrl(profile?.avatar)} alt='' />
-                ) : (
-                  <FiUser size={20} className='text-greenDark' />
-                )}
-              </Link>
-            </Popover>
             <Popover
               renderPopover={
                 <div className=' w-[25vw] bg-white shadow-lg rounded-md'>

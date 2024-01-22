@@ -114,7 +114,7 @@ export default function Profile() {
 
   return (
     <div className=' text-gray-700'>
-      <div className='mb-1 text-xl'>Hồ sơ của tôi</div>
+      <div className='mb-1 text-xl font-medium'>Hồ sơ của tôi</div>
       <div>Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
       <div className='my-8 h-[1px] w-full bg-slate-100'></div>
       <div className='grid grid-cols-12 md:gap-9'>
