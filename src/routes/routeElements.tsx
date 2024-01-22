@@ -3,6 +3,7 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import { pathRoutes } from 'src/constants/path.routes'
 import { AppContext } from 'src/contexts/app.contexts'
 import MainLayout from 'src/layouts/MainLayout'
+import SingleBlog from 'src/pages/SingleBlog'
 import RoleLayout from 'src/layouts/RoleLayout'
 import About from 'src/pages/About/Index'
 import HandleProduct from 'src/pages/Admin/pages/HandleProduct'
@@ -44,6 +45,14 @@ export default function routeElements() {
       element: (
         <MainLayout>
           <Home />
+        </MainLayout>
+      )
+    },
+    {
+      path: pathRoutes.blog,
+      element: (
+        <MainLayout>
+          <SingleBlog />
         </MainLayout>
       )
     },
