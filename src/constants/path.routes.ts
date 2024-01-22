@@ -14,6 +14,7 @@ export const pathRoutes = {
   productDetail: ':nameId',
   account: '/account',
   about: '/about',
+  blog: '/single-blog',
 
   admin: '/admin',
   product_management: '/admin/product-management',
