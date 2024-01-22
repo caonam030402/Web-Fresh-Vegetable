@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +13,7 @@
 
 body {
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   background: #f5f5f5;
@@ -28,4 +29,32 @@ td {
 
 th {
   padding-bottom: 5px;
+}
+
+.arrow_popover {
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #ffffff transparent;
+  position: absolute;
+  transform: translateY(-100%);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.arrow_popover::after {
+  content: '';
+  width: 50px;
+  background: transparent;
+  position: absolute;
+  height: 20px;
+  top: 0px;
+  right: 0;
+}
+
+.arrow_popover::before {
+  content: '';
+  width: 50px;
+  background: transparent;
+  position: absolute;
+  height: 20px;
+  top: 0px;
+  left: 0;
 }
