@@ -1,5 +1,6 @@
 import Button from 'src/components/atoms/Button'
 import InputComment from './InputComment'
+import CommentItem from './CommentItem'
 
 export default function Comment() {
   return (
@@ -33,6 +34,8 @@ export default function Comment() {
         </div>
       </div>
       <Button>{'Post Comments'}</Button>
+      <div className='text-zinc-900 text-2xl font-medium mt-7'>Comments</div>
+      <CommentItem />
     </div>
   )
 }
