@@ -72,7 +72,8 @@ export default function OrderMangagement() {
     orderConfirmationMutation.mutate(
       { status: purchasesStatus.waitForGetting, purchase_id: idPurchase },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log(data)
           toast.success('Xác nhận đơn thành công')
           refetch()
         }

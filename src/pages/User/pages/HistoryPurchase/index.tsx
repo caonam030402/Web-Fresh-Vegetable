@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Link, NavLink, createSearchParams, useNavigate } from 'react-router-dom'
+import { Link, NavLink, createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { purchasesStatus } from 'src/constants/purchase'
 import UseQueryParams from 'src/hooks/UseQueryParams'
 import { formatCurrency, generateNameId } from 'src/utils/utils'
@@ -9,8 +9,26 @@ import { useMutation, useQuery } from 'react-query'
 import { purchaseService } from 'src/services/purchase.service'
 import { pathRoutes } from 'src/constants/path.routes'
 import Button from 'src/components/atoms/Button'
+import { toast } from 'react-toastify'
 
 export default function HistoryPurchase() {
+  const updatePurchaseMutation = useMutation({
+    mutationFn: purchaseService.updatePurchase
+  })
+
+  const hanleCancelledOrder = (purchase_id: string) => {
+    updatePurchaseMutation.mutate(
+      { status: purchasesStatus.cancelled, purchase_id: purchase_id },
+      {
+        onSuccess: (data) => {
+          toast.success('Hủy đơn thành công')
+          refetch()
+        }
+      }
+    )
+  }
+
+  const location = useLocation()
   const purchaseTabs = [
     { status: purchasesStatus.all, name: 'Tất cả đơn mua' },
     { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
@@ -23,7 +41,7 @@ export default function HistoryPurchase() {
   const queryParams: { status?: string } = UseQueryParams()
   const status: number = Number(queryParams.status) || purchasesStatus.all
 
-  const { data: purchasesInCartData } = useQuery({
+  const { data: purchasesInCartData, refetch } = useQuery({
     queryKey: ['purchases', { status }],
     queryFn: () => purchaseService.getPurchases({ status: status as PurchaseListStatus })
   })
@@ -55,10 +73,10 @@ export default function HistoryPurchase() {
         }).toString()
       }}
       className={classNames(
-        ' flex flex-1 items-center justify-center border-b-2 bg-white pb-4 text-center capitalize',
+        ' flex flex-1 items-center font-semibold justify-center border-b-2 bg-white pb-4 text-center capitalize',
         {
           'border-b-primary text-primary': status === tab.status,
-          'border-b-black/10 text-gray-900': status !== tab.status
+          'border-b-black/10 text-gray-600': status !== tab.status
         }
       )}
     >
@@ -87,15 +105,15 @@ export default function HistoryPurchase() {
         <div>
           {purchasesInCart?.map((purchase) => (
             <div key={purchase._id} className='mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm'>
-              <Link
-                className='flex flex-col'
-                to={`${pathRoutes.productList}${generateNameId({
-                  name: purchase.product.name,
-                  id: purchase.product._id
-                })}`}
-              >
+              <div className='flex flex-col'>
                 <div className='items-center justify-between md:flex'>
-                  <div className='flex items-center'>
+                  <Link
+                    to={`${pathRoutes.home}${generateNameId({
+                      name: purchase.product.name,
+                      id: purchase.product._id
+                    })}`}
+                    className='flex items-center'
+                  >
                     <img
                       className='mr-3 h-20 w-20 border-[1px] border-black/20 object-cover'
                       src={purchase.product.image}
@@ -114,7 +132,7 @@ export default function HistoryPurchase() {
                         <div className='block md:hidden'>{productPrice(purchase)}</div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                   <div className='hidden md:block'>
                     <div>{productPrice(purchase)}</div>
                   </div>
@@ -129,19 +147,31 @@ export default function HistoryPurchase() {
                   <div className='flex flex-col items-end'>
                     <div className='flex items-center gap-2'>
                       <span className='text-xs capitalize md:text-sm'>Thành tiền:</span>
-                      <span className='text-lg text-primary md:text-2xl'>
+                      <span className='text-lg text-primary md:text-2xl font-semibold'>
                         ₫{formatCurrency(purchase.buy_count * purchase.price)}
                       </span>
                     </div>
-                    <Button
-                      className='mt-4 flex w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm text-white'
-                      onClick={() => buyNow(purchase.buy_count, purchase.product._id)}
-                    >
-                      Mua lại
-                    </Button>
+                    <div className='flex gap-3'>
+                      <Button
+                        widthIcon={false}
+                        className='mt-4 flex w-[180px] items-center justify-center rounded-sm bg-primary py-[10px] text-sm uppercase font-semibold text-white'
+                        onClick={() => buyNow(purchase.buy_count, purchase.product._id)}
+                      >
+                        Mua lại
+                      </Button>
+                      {location.search === `?status=${purchasesStatus.waitForConfirmation}` && (
+                        <Button
+                          widthIcon={false}
+                          className='mt-4 bg-white border-[2px] border-primary text-primary flex w-[180px] items-center justify-center rounded-sm py-[10px] text-sm uppercase font-semibold '
+                          onClick={() => hanleCancelledOrder(purchase._id)}
+                        >
+                          <div className='text-primary'>Hủy đơn hàng</div>
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </div>
           ))}
         </div>
