@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import Breadcrumb from 'src/components/organisms/Breadcrumb'
@@ -9,6 +9,7 @@ import RoleLayout from 'src/layouts/RoleLayout'
 import About from 'src/pages/About/Index'
 import HandleProduct from 'src/pages/Admin/pages/HandleProduct'
 import CreateProduct from 'src/pages/Admin/pages/HandleProduct'
+import OrderMangagement from 'src/pages/Admin/pages/OrderMangagement'
 import ProductManagement from 'src/pages/Admin/pages/ProductManagement'
 import Cart from 'src/pages/Cart'
 import Home from 'src/pages/Home/Index'
@@ -22,13 +23,15 @@ import UserLayout from 'src/pages/User/layouts/UserLayout'
 import ChangePassword from 'src/pages/User/pages/ChangePassword'
 import HistoryPurchase from 'src/pages/User/pages/HistoryPurchase'
 import Profile from 'src/pages/User/pages/Profile'
-import { authService } from 'src/services/auth.service'
 
 export default function routeElements() {
-  const { isAuthenticated, profile } = useContext(AppContext)
+  const ProtectedRoute = ({ admin = false }) => {
+    const { isAuthenticated, isAdmin } = useContext(AppContext)
 
-  const ProtectedRoute = () => {
-    const { isAuthenticated } = useContext(AppContext)
+    if (admin) {
+      return isAuthenticated && isAdmin ? <Outlet /> : <Navigate to={pathRoutes.home} />
+    }
+
     return isAuthenticated ? <Outlet /> : <Navigate to={pathRoutes.login} />
   }
 
@@ -75,6 +78,14 @@ export default function routeElements() {
       element: <ProtectedRoute />,
       children: [
         {
+          path: pathRoutes.cart,
+          element: (
+            <MainLayout>
+              <Cart />
+            </MainLayout>
+          )
+        },
+        {
           path: pathRoutes.payment,
           element: (
             <MainLayout>
@@ -90,12 +101,11 @@ export default function routeElements() {
             </MainLayout>
           )
         },
-
         {
           path: pathRoutes.user,
           element: (
             <MainLayout>
-              <UserLayout />
+              <RoleLayout role='user' />
             </MainLayout>
           ),
           children: [
@@ -116,12 +126,36 @@ export default function routeElements() {
       ]
     },
     {
-      path: pathRoutes.cart,
-      element: (
-        <MainLayout>
-          <Cart />
-        </MainLayout>
-      )
+      path: '',
+      element: <ProtectedRoute admin={true} />,
+      children: [
+        {
+          path: pathRoutes.admin,
+          element: (
+            <MainLayout>
+              <RoleLayout role='admin' />
+            </MainLayout>
+          ),
+          children: [
+            {
+              path: pathRoutes.product_management,
+              element: <ProductManagement />
+            },
+            {
+              path: pathRoutes.order_management,
+              element: <OrderMangagement />
+            },
+            {
+              path: pathRoutes.add_product,
+              element: <HandleProduct />
+            },
+            {
+              path: pathRoutes.update_product,
+              element: <HandleProduct />
+            }
+          ]
+        }
+      ]
     },
     {
       path: pathRoutes.about,
@@ -146,28 +180,6 @@ export default function routeElements() {
           <ProductList />
         </MainLayout>
       )
-    },
-    {
-      path: pathRoutes.admin,
-      element: (
-        <MainLayout>
-          <RoleLayout />
-        </MainLayout>
-      ),
-      children: [
-        {
-          path: pathRoutes.product_management,
-          element: <ProductManagement />
-        },
-        {
-          path: pathRoutes.add_product,
-          element: <HandleProduct />
-        },
-        {
-          path: pathRoutes.update_product,
-          element: <HandleProduct />
-        }
-      ]
     }
   ])
   return routeElements

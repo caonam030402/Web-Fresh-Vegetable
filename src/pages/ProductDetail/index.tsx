@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { MdOutlineShoppingCartCheckout } from 'react-icons/md'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { toast } from 'react-toastify'
 import Button from 'src/components/atoms/Button'
@@ -10,11 +10,14 @@ import ControllerQuanlity from 'src/components/organisms/ControllerQuanlity'
 import ProductItem from 'src/components/organisms/ProductItem'
 import { pathRoutes } from 'src/constants/path.routes'
 import { purchasesStatus } from 'src/constants/purchase'
+import { AppContext } from 'src/contexts/app.contexts'
 import { productService } from 'src/services/product.service'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency, formatNumberToSocialStyle, generateNameId, getIdFromNameId, rateSale } from 'src/utils/utils'
 
 export default function ProductDetail() {
+  const { isAdmin } = useContext(AppContext)
+
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
   const navigate = useNavigate()
@@ -110,17 +113,33 @@ export default function ProductDetail() {
             />
             <span>{productDetail?.quantity} Sản phẩm có sẵn</span>
           </div>
-          <div className='flex gap-3 mt-8'>
-            <Button onClick={addToCart} className='border-primary bg-primary/0 capitalize border' widthIcon={false}>
-              <div className='flex items-center gap-1 text-primary'>
-                <MdOutlineShoppingCartCheckout className='text-lg' />
-                <span>Thêm vào giỏ hàng</span>
-              </div>
-            </Button>
-            <Button onClick={buyNow} widthIcon={false}>
-              Mua Ngay
-            </Button>
-          </div>
+          {!isAdmin ? (
+            <div className='flex gap-3 mt-8'>
+              <Button onClick={addToCart} className='border-primary bg-primary/0 capitalize border' widthIcon={false}>
+                <div className='flex items-center gap-1 text-primary'>
+                  <MdOutlineShoppingCartCheckout className='text-lg' />
+                  <span>Thêm vào giỏ hàng</span>
+                </div>
+              </Button>
+              <Button className='capitalize' onClick={buyNow} widthIcon={false}>
+                Mua Ngay
+              </Button>
+            </div>
+          ) : (
+            <Link
+              to={`${pathRoutes.update_product}${generateNameId({
+                name: productDetail?.name || '',
+                id: productDetail?._id || ''
+              })}`}
+            >
+              <Button className='capitalize mt-8' widthIcon={false}>
+                <div className='flex items-center gap-1'>
+                  <MdOutlineShoppingCartCheckout className='text-lg' />
+                  <span>Sửa sản phẩm</span>
+                </div>
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
       <div className='bg-white p-5'>

@@ -1,5 +1,5 @@
 import { createContext, SetStateAction, useState } from 'react'
-import { getAccessTokenFromLS, getProfileFromLS } from 'src/utils/auth'
+import { getAccessTokenFromLS, getProfileFromLS, getRoleFromLS } from 'src/utils/auth'
 
 interface AppContextInterface {
   isAuthenticated: boolean
@@ -11,9 +11,13 @@ interface AppContextInterface {
   reset: () => void
   purchasePayment: Purchase[]
   setPurchasePayment: React.Dispatch<SetStateAction<Purchase[]>>
+  isAdmin: boolean | string
+  setIsAdmin: React.Dispatch<SetStateAction<boolean | string>>
 }
 
 const initialAppContext: AppContextInterface = {
+  isAdmin: getRoleFromLS(),
+  setIsAdmin: () => null,
   isAuthenticated: Boolean(getAccessTokenFromLS()),
   setIsAuthenticated: () => null,
   profile: getProfileFromLS(),
@@ -32,15 +36,17 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchase[]>([])
   const [profile, setProfile] = useState(initialAppContext.profile)
   const [purchasePayment, setPurchasePayment] = useState(initialAppContext.purchasePayment)
+  const [isAdmin, setIsAdmin] = useState(initialAppContext.isAdmin)
 
   const reset = () => {
     setIsAuthenticated(false), setExtendedPurchases([]), setProfile(null)
   }
-  console.log(extendedPurchases)
 
   return (
     <AppContext.Provider
       value={{
+        isAdmin,
+        setIsAdmin,
         purchasePayment,
         setPurchasePayment,
         isAuthenticated,

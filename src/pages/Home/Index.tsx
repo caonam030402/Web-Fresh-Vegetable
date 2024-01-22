@@ -8,6 +8,10 @@ import LatestNews from './components/LasestNews'
 import Testimonial from './components/Testimonial'
 import AppSlide from 'src/components/organisms/AppSlide'
 import Sale from './components/Sale'
+import { useQuery } from 'react-query'
+import { authService } from 'src/services/auth.service'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.contexts'
 
 export default function Home() {
   return (

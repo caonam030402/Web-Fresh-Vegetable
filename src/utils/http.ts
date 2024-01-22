@@ -3,9 +3,11 @@ import {
   clearLS,
   getAccessTokenFromLS,
   getRefreshTokenFromLS,
+  getRoleFromLS,
   setAccessTokenToLS,
   setProfileToLS,
-  setRefreshTokenToLS
+  setRefreshTokenToLS,
+  setRoleToLS
 } from './auth'
 import { config } from 'src/constants/config'
 import { pathRoutes } from 'src/constants/path.routes'
@@ -38,6 +40,11 @@ class Http {
     )
     this.instance.interceptors.response.use((response) => {
       const url = response.config.url
+      if (url === 'is-admin') {
+        const data: SuccessResponse<{ isAdmin: boolean }> = response.data
+        setRoleToLS(data.data.isAdmin)
+        console.log(getRoleFromLS())
+      }
       if (url === pathRoutes.login || url === pathRoutes.register) {
         const data: AuthResponse = response.data
         this.accessToken = data.data.access_token

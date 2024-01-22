@@ -1,4 +1,6 @@
 import { AxiosError, HttpStatusCode, isAxiosError } from 'axios'
+import { config } from 'src/constants/config'
+import CryptoJS from 'crypto-js'
 
 export const localStorageEventTarget = new EventTarget()
 
@@ -12,6 +14,19 @@ export const getAccessTokenFromLS = () => {
 export const setRefreshTokenToLS = (refreshToken: string) => {
   return localStorage.setItem('refresh-token', refreshToken)
 }
+
+export const setRoleToLS = (role: boolean) => {
+  const encryptedRole = CryptoJS.AES.encrypt(JSON.stringify(role), config.secretKeyRole).toString()
+  return localStorage.setItem('role', encryptedRole)
+}
+
+export const getRoleFromLS = () => {
+  const encryptedRole = localStorage.getItem('role') || ''
+  const decryptedBytes = CryptoJS.AES.decrypt(encryptedRole, config.secretKeyRole)
+  const decryptedRole = decryptedBytes.toString(CryptoJS.enc.Utf8)
+  return decryptedRole ? JSON.parse(decryptedRole) : null
+}
+
 export const getRefreshTokenFromLS = () => {
   return localStorage.getItem('refresh-token') || ''
 }

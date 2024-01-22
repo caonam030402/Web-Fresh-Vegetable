@@ -11,7 +11,7 @@ export const authService = {
   logout() {
     return http.post(pathRoutes.logout)
   },
-  getPayment(_id: string) {
-    return http.get<SuccessResponse<{ isAdmin: boolean }>>(`/is-admin/${_id}`)
+  getIsAdmin() {
+    return http.get<SuccessResponse<{ isAdmin: boolean }>>('is-admin')
   }
 }

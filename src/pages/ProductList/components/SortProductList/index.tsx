@@ -9,6 +9,10 @@ import classNames from 'classnames'
 import omit from 'lodash/omit'
 import { pathRoutes } from 'src/constants/path.routes'
 import Popover from 'src/components/organisms/Popover'
+import { AppContext } from 'src/contexts/app.contexts'
+import { useContext } from 'react'
+import Button from 'src/components/atoms/Button'
+import { RiAddFill } from 'react-icons/ri'
 
 interface Props {
   queryConfig: QueryConfig
@@ -16,6 +20,8 @@ interface Props {
 }
 
 export default function SortProductList({ queryConfig, pageSize }: Props) {
+  const { isAdmin } = useContext(AppContext)
+
   const { sort_by = sortBy.view, order } = queryConfig
   const page = Number(queryConfig.page)
   const navigate = useNavigate()
@@ -127,45 +133,59 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
         </Popover>
         {/* PAGINATION TOP */}
       </div>
-      <div className='hidden items-center lg:flex'>
-        <div>
-          <span className='text-primary'>{page}</span>
-          <span>/</span>
-          <span>{pageSize}</span>
+      {!isAdmin && (
+        <div className='hidden items-center lg:flex'>
+          <div>
+            <span className='text-primary'>{page}</span>
+            <span>/</span>
+            <span>{pageSize}</span>
+          </div>
+          <div className='ml-6 flex'>
+            {page === 1 ? (
+              <button className='mr-[1px] cursor-not-allowed rounded-sm bg-white p-3 opacity-50'>
+                <MdKeyboardArrowLeft />
+              </button>
+            ) : (
+              <Link
+                to={{
+                  pathname: pathRoutes.productList,
+                  search: createSearchParams({ ...queryConfig, page: (page - 1).toString() }).toString()
+                }}
+                className='mr-[1px] rounded-sm bg-greenDark/10 p-3'
+              >
+                <MdKeyboardArrowLeft />
+              </Link>
+            )}
+            {page === pageSize ? (
+              <button className='mr-[1px] cursor-not-allowed rounded-sm bg-greenDark/10 p-3 opacity-50'>
+                <MdKeyboardArrowRight />
+              </button>
+            ) : (
+              <Link
+                to={{
+                  pathname: pathRoutes.productList,
+                  search: createSearchParams({ ...queryConfig, page: (page + 1).toString() }).toString()
+                }}
+                className='rounded-sm bg-greenDark/10 p-3'
+              >
+                <MdKeyboardArrowRight />
+              </Link>
+            )}
+          </div>
         </div>
-        <div className='ml-6 flex'>
-          {page === 1 ? (
-            <button className='mr-[1px] cursor-not-allowed rounded-sm bg-white p-3 opacity-50'>
-              <MdKeyboardArrowLeft />
-            </button>
-          ) : (
-            <Link
-              to={{
-                pathname: pathRoutes.productList,
-                search: createSearchParams({ ...queryConfig, page: (page - 1).toString() }).toString()
-              }}
-              className='mr-[1px] rounded-sm bg-greenDark/10 p-3'
-            >
-              <MdKeyboardArrowLeft />
-            </Link>
-          )}
-          {page === pageSize ? (
-            <button className='mr-[1px] cursor-not-allowed rounded-sm bg-greenDark/10 p-3 opacity-50'>
-              <MdKeyboardArrowRight />
-            </button>
-          ) : (
-            <Link
-              to={{
-                pathname: pathRoutes.productList,
-                search: createSearchParams({ ...queryConfig, page: (page + 1).toString() }).toString()
-              }}
-              className='rounded-sm bg-greenDark/10 p-3'
-            >
-              <MdKeyboardArrowRight />
-            </Link>
-          )}
-        </div>
-      </div>
+      )}
+      {isAdmin && (
+        <Link to={pathRoutes.add_product} className=''>
+          <Button className='rounded-md' widthIcon={false}>
+            <div className='flex items-center gap-1 '>
+              <span>
+                <RiAddFill className='mr-2 text-lg' />
+              </span>
+              <span>Thêm sản phẩm</span>
+            </div>
+          </Button>
+        </Link>
+      )}
     </div>
   )
 }

@@ -18,5 +18,6 @@ export const pathRoutes = {
   admin: '/admin',
   product_management: '/admin/product-management',
   add_product: '/admin/product-management/add',
-  update_product: '/admin/product/manage/:productId'
+  update_product: '/admin/product/manage/:productId',
+  order_management: '/admin/order-management'
 }

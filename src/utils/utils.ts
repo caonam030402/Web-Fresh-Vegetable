@@ -32,5 +32,16 @@ export const rateSale = (original: number, sale: number) => {
   return (100 - (sale * 100) / original).toFixed(0) + '%'
 }
 
+export function convertStringToBoolean(str: string) {
+  var lowerCaseStr = str.toLowerCase()
+  if (lowerCaseStr === 'true') {
+    return true
+  } else if (lowerCaseStr === 'false') {
+    return false
+  } else {
+    return null
+  }
+}
+
 export const getAvatarUrl = (avatarName?: string) =>
   avatarName ? `${config.baseUrl}images/${avatarName}` : avatarDefault

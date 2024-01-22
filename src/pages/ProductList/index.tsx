@@ -5,13 +5,14 @@ import { useQuery } from 'react-query'
 import { categoryService } from 'src/services/category.service'
 import RatingStars from './components/RatingStars'
 import Input from 'src/components/atoms/Input'
-import Button from 'src/components/atoms/Button'
 import { InputNumber } from 'src/components/atoms/InputNumber'
 import { productService } from 'src/services/product.service'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 import AsideFitter from './components/AsideFitter'
 import Pagination from 'src/components/organisms/Pagination'
 import SortProductList from './components/SortProductList'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.contexts'
 
 const listProductData = [
   {

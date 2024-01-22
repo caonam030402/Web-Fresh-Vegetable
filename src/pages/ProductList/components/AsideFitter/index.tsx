@@ -16,7 +16,6 @@ interface Props {
 
 export default function AsideFitter({ categories, queryConfig }: Props) {
   const { category } = queryConfig
-  const handleRemoveAllQuery = () => {}
   return (
     <div>
       <div>

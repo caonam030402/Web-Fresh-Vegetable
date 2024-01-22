@@ -8,7 +8,7 @@ interface Purchase {
   price: number
   price_before_discount: number
   status: PurchaseStatus
-  user: string
+  user: User
   product: Product
   createdAt: string
   updatedAt: string

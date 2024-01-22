@@ -14,11 +14,10 @@ import Button from '../atoms/Button'
 import { purchasesStatus } from 'src/constants/purchase'
 import { purchaseService } from 'src/services/purchase.service'
 import { formatCurrency, getAvatarUrl } from 'src/utils/utils'
-import { clearLS } from 'src/utils/auth'
 
 export default function Header() {
   const MAX_PURCHASES = 5
-  const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile, profile, isAuthenticated, isAdmin } = useContext(AppContext)
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
@@ -98,17 +97,31 @@ export default function Header() {
                     <div>
                       <div className='font-medium text-sm text-greenDark'> {profile?.email}</div>
                       <div className='w-full h-[1px] bg-neutral-300 my-1'></div>
-                      <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
-                        <Link to={pathRoutes.profile} className='hover:text-primary'>
-                          Tài khoản của tôi
-                        </Link>
-                        <Link to={pathRoutes.historyPurchase} className='hover:text-primary'>
-                          Đơn mua
-                        </Link>
-                        <button onClick={handleLogout} className='hover:text-primary'>
-                          Đăng xuất
-                        </button>
-                      </div>
+                      {!isAdmin ? (
+                        <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
+                          <Link to={pathRoutes.profile} className='hover:text-primary'>
+                            Tài khoản của tôi
+                          </Link>
+                          <Link to={pathRoutes.historyPurchase} className='hover:text-primary'>
+                            Đơn mua
+                          </Link>
+                          <button onClick={handleLogout} className='hover:text-primary'>
+                            Đăng xuất
+                          </button>
+                        </div>
+                      ) : (
+                        <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
+                          <Link to={pathRoutes.product_management} className='hover:text-primary'>
+                            Quản lý sản phẩm
+                          </Link>
+                          <Link to={pathRoutes.order_management} className='hover:text-primary'>
+                            Quản lý đơn hàng
+                          </Link>
+                          <button onClick={handleLogout} className='hover:text-primary'>
+                            Đăng xuất
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className='flex flex-col gap-2 text-xs mt-2 items-start'>
@@ -184,7 +197,7 @@ export default function Header() {
               }
             >
               <Link
-                to={pathRoutes.cart}
+                to={!isAdmin ? pathRoutes.cart : pathRoutes.order_management}
                 className='hover:bg-opacity-30 duration-300 transition-all relative w-10 h-10 flex items-center justify-center rounded-full bg-primary bg-opacity-10'
               >
                 <FiShoppingCart size={20} className='text-greenDark' />

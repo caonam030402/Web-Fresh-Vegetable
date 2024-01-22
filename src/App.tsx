@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import FloatingContact from './components/organisms/FloatingContact'
 import routeElements from './routes/routeElements'
 import { ToastContainer } from 'react-toastify'
@@ -10,17 +10,12 @@ import { authService } from './services/auth.service'
 
 function App() {
   const routes = routeElements()
-  // const { profile } = useContext(AppContext)
-  // const { data } = useQuery({
-  //   queryKey: ['isAdmin1'],
-  //   queryFn: () => {
-  //     return authService.getPayment(profile?._id || '')
-  //   }
-  // })
-
-  // const isAdmin = data?.data.data.isAdmin
-  // console.log(isAdmin)
-
+  useQuery({
+    queryKey: ['isAdmin'],
+    queryFn: () => {
+      return authService.getIsAdmin()
+    }
+  })
   return (
     <div className=''>
       {routes}
