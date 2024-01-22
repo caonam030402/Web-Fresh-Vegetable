@@ -61,7 +61,7 @@ export default function Header() {
   }, [refetch])
 
   return (
-    <div className='bg-white '>
+    <div className='bg-white sticky top-0 z-20'>
       <div className='bg-primary text-white text-xs py-2'>
         <div className='container flex items-center justify-center md:justify-between'>
           <div className='flex items-center gap-2'>

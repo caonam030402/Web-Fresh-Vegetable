@@ -7,6 +7,7 @@ import { AppContext } from './contexts/app.contexts'
 import { localStorageEventTarget } from './utils/auth'
 import { useQuery } from 'react-query'
 import { authService } from './services/auth.service'
+import { ScrollToTop } from './hooks/ScrollToTop'
 
 function App() {
   const routes = routeElements()
@@ -20,6 +21,7 @@ function App() {
     <div className=''>
       {routes}
       <div className='fixed bottom-[7%] right-[2%] z-10'>
+        <ScrollToTop />
         <FloatingContact />
         <ToastContainer />
       </div>

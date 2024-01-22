@@ -5,7 +5,7 @@ import Banner from './Banner'
 
 export default function BlogDetail() {
   return (
-    <div className='mt-[50px]'>
+    <div className='mt-[30px]'>
       <img src={pathImage.orange} className='w-full h-full' />
       <Info />
       <div className='font-medium  text-zinc-900 text-[32px] w-full'>
